@@ -1,0 +1,35 @@
+{
+  "name": "early-office",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boluwatifeajayi/early-office.git"
+  },
+  "author": "Callmedoziee <francisnwosu017@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/boluwatifeajayi/early-office/issues"
+  },
+  "homepage": "https://github.com/boluwatifeajayi/early-office#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "start": "nodemon app.js"
+  },
+  "keywords": [],
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "csurf": "^1.11.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.4.0",
+    "morgan": "^1.10.0"
+  }
+}
