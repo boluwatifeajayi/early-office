@@ -1,6 +1,15 @@
-async function studentSignIn(req,res){
+const student = require("../models/student.model");
 
-    return 0;
+async function studentSignIn(req,res){
+    const {email, password} = req.body;
+    try {
+        const currentStudent = await student.findOne({email, password}).exec();
+        if (currentStudent == null) return res.status(401).send("Invalid credentials")
+        return res.status(200).json(currentStudent);
+    } catch (error) {
+        console.log(error.message);
+    }
+    
 }
 
 async function companySignIn(req,res){
