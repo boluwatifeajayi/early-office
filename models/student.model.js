@@ -56,30 +56,63 @@ const studentSchema = mongoose.Schema({
             required:true
         },
         gpa:{
-            type:String,
+            type:String
         },
         gpaScale:{
-            type:String,
+            type:String
         }
-    }]
-    // workExperience:[
-    // { 
-    //     company:{
-    //         type:String,
-    //     },
-    //     jobTitle:{
-    //         type:String,
-    //     },
-    //     certification:{
-    //         type:String,
-    //     },
-    //     company:{
-    //         type:String,
-    //     },
-    //     company:{
-    //         type:String,
-    //     },
-    // }]
+    }],   
+    workExperience:[      
+    { 
+        company:{
+            type:String,
+        },
+        jobTitle:{
+            type:String,
+        },
+        certifications:[
+            {
+                issuerName:{
+                    type:String
+                },
+                issuingOrg:{
+                    type:String
+                },
+                issueDate:{
+                    type:String
+                },
+                credentialId:{
+                    type:String
+                }
+            }
+        ],
+    }],
+    skills:{
+        type:[String],
+        required:true
+    }, 
+    workSamples:[
+        {
+            sampleLink:{
+                type:String
+            },
+            coverLetter:{
+                type:String
+            },
+            cv:{
+                type:String
+            },
+        }
+    ], 
+    reasonToHire:{
+        type:String, 
+        required:true
+    }, 
+    jobAvailability:{
+        type:String,
+        required:true
+    }
+
 })
 
 
