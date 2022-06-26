@@ -12,9 +12,6 @@
     "url": "https://github.com/boluwatifeajayi/early-office/issues"
   },
   "homepage": "https://github.com/boluwatifeajayi/early-office#readme",
-  "devDependencies": {
-    "nodemon": "^2.0.18"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
@@ -22,6 +19,7 @@
   "keywords": [],
   "description": "",
   "dependencies": {
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "csurf": "^1.11.0",
@@ -32,5 +30,8 @@
     "mongoose": "^6.4.0",
     "morgan": "^1.10.0",
     "mouse": "^0.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
   }
 }
