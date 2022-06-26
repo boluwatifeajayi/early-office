@@ -1,16 +1,16 @@
-async function getStudents () {
+async function getStudents (req, res) {
     
 }
 
-async function getStudentById(){
+async function getStudentById(req, res){
 
 }
 
-async function getStudentByLocation(){
+async function getStudentByLocation(req, res){
 
 }
 
-async function getStudentByInterest(){
+async function getStudentByInterest(req, res){
 
 }
 

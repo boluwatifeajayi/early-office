@@ -1,8 +1,8 @@
-async function studentSignUp (){
+async function studentSignUp (req, res){
     const {} = req.body
 }
 
-async function companySignUp (){
+async function companySignUp (req, res){
     
 }
 
