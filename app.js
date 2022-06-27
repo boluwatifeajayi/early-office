@@ -38,7 +38,7 @@ app.get("/",(req,res)=>{
 const PORT = process.env.PORT
 const SERVER = "localhost";
 dbConnect().then(() => {
-  app.listen(PORT, SERVER, () => {
+  app.listen(PORT, () => {
     console.log(`Server running on http://${SERVER}:${PORT}`);
   });
 });
