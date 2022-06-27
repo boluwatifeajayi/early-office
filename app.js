@@ -31,6 +31,9 @@ app.use(signInRoute)
 app.use(signUpRoute)
 app.use(profileRoutes)
 
+app.get("/",(req,res)=>{
+  res.json("doneeee")
+})
 // Database connection and starting the server
 const PORT = process.env.PORT
 const SERVER = "localhost";
