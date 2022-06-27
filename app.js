@@ -52,9 +52,8 @@ app.use(signUpRoute)
 // Database connection and starting the server
 const PORT = process.env.PORT
 const SERVER = "localhost";
-dbConnect().then(()=>{
-    app.listen(PORT, SERVER, ()=>{
-        console.log(`Server running on http://${SERVER}:${PORT}`);
-    })
-})
-
+dbConnect().then(() => {
+  app.listen(PORT, SERVER, () => {
+    console.log(`Server running on http://${SERVER}:${PORT}`);
+  });
+});
