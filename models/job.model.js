@@ -26,8 +26,12 @@ const jobSchema = new mongoose.Schema(
       type: [String],
     },
 
-    salary: {
+    currencyType: {
       type: String,
+    },
+
+    salary: {
+      type: Number,
     },
 
     duration: {
@@ -35,7 +39,14 @@ const jobSchema = new mongoose.Schema(
     },
 
     location: {
-      type: String,
+      state : {
+        type : String
+      },
+
+      country : {
+        type : String,
+        default : "Nigeria"
+      }
     },
 
     additionalInformation: {

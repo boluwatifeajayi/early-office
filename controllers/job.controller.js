@@ -1,6 +1,7 @@
 const jobModel = require("../models/job.model");
 const companyModel = require("../models/company.model");
-const { deleteModel } = require("mongoose");
+
+
 const createJob = async (req, res) => {
   const {
     Role,
@@ -34,6 +35,8 @@ const createJob = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
+
+
 const getAllJobs = async (req, res) => {
   try {
     const allJobs = jobModel.find();
@@ -42,6 +45,8 @@ const getAllJobs = async (req, res) => {
     res.status(404).json({ error: "No jobs available" });
   }
 };
+
+
 const getCompanyJobs = async (req, res) => {
   try {
     const { companyName } = req.params;
@@ -52,6 +57,8 @@ const getCompanyJobs = async (req, res) => {
     res.status(404).json({ error: error.message });
   }
 };
+
+
 const getJobById = async (req, res) => {
   const { jobId } = req.params;
   try {
@@ -62,4 +69,47 @@ const getJobById = async (req, res) => {
   }
 };
 
-module.exports = { createJob, getAllJobs, getCompanyJobs, getJobById };
+
+const getStateJobs = async (req, res) => {
+  const { state } = req.params;
+  try {
+    const currentJob = jobModel.find({location : {state : state}});
+    res.status(200).json(currentJob);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+};
+
+
+const getTypeJobs = async (req, res) => {
+  const { type } = req.params;
+  try {
+    const currentJob = jobModel.find({type});
+    res.status(200).json(currentJob);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+};
+
+
+const getSalaryJobs = async (req, res) => {
+  const { minSalary, maxSalary } = req.query;
+  try {
+    const currentJob = jobModel.find({salary : {$gt : minSalary, $lt : maxSalary}});
+    res.status(200).json(currentJob);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+};
+
+
+
+module.exports = { 
+  createJob, 
+  getAllJobs, 
+  getCompanyJobs, 
+  getJobById,
+  getStateJobs,
+  getTypeJobs,
+  getSalaryJobs,
+};

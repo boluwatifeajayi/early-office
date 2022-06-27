@@ -9,6 +9,7 @@ const helmet = require("helmet")
 // Requiring routes
 const signInRoute = require("./routes/signIn.route")
 const signUpRoute = require("./routes/signUp.route")
+const profileRoutes = require("./routes/profile/index.profile")
 
 
 // setting cors
@@ -28,6 +29,7 @@ app.use(express.urlencoded({extended : false}))
 // Using routes
 app.use(signInRoute)
 app.use(signUpRoute)
+app.use(profileRoutes)
 
 // Database connection and starting the server
 const PORT = process.env.PORT
