@@ -3,7 +3,7 @@ const hashPassword = require("../middlewares/helperfunctions/hashPassword.helper
 async function studentSignUp (req, res){
     // destructuring req.body
     const {email, lastname, firstname, password , phoneNumber} = req.body;
-    const hashedPassword = await hashPassword(password)
+    const hashedPassword = await hashPassword(password);
     try {
         const newStudent = await student.create({
             email, 

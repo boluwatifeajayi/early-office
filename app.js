@@ -10,26 +10,6 @@ const helmet = require("helmet")
 const signInRoute = require("./routes/signIn.route")
 const signUpRoute = require("./routes/signUp.route")
 
-// app.get("/", async (req, res)=>{
-//  const student =  await studentRegister.create({
-//         firstname :"chiedozie",
-//         lastname:"nwosu",
-//         email:"dozie.come",
-//         password:"doings",
-//         fieldOfInterest:["Medicine", "Kung fu", "Programming", "Money ways"],
-//         graduation:[ 
-//             {    
-//                 status:"somehow",
-//                 schoolName:"somehow",
-//                 startYear:"somehow",
-//                 degree:"somehow",
-//                 gpa:"E dey",
-//                 gpaScale:"E dey"
-//             }]
-//         })
-// console.log("saved" + student);
-//     return res.send("him");
-// })
 
 // setting cors
 const whiteList = ["http://localhost:3000","http://localhost:3001"]
