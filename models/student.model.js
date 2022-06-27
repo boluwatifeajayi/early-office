@@ -102,8 +102,7 @@ const studentSchema = mongoose.Schema({
     jobAvailability:{
         type:String,
     }
-
-})
+},{timestamps : true})
 
 
 module.exports = mongoose.model('student',studentSchema)

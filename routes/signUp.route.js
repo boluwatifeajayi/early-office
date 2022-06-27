@@ -3,10 +3,10 @@ const { updateStudentProfile } = require("../controllers/signUp.controller");
 const { protectedRoutes } = require("../middlewares/authentication/protectedRoutes");
 const validation = require("../middlewares/validation/validation");
 
-const { studentSignUpSchema } = require("../middlewares/validation/validation.Schema/signUp.schema");
+const { studentSignUpSchema, companySignUpSchema } = require("../middlewares/validation/validation.Schema/signUp.schema");
 const studentSignUp = require("../controllers/signUp.controller").studentSignUp;
 const companySignUp = require("../controllers/signUp.controller").companySignUp;
-var route = express.Router()
+var route = express.Router();
 
 // Student signup route
 route.post("/api/student/signUp", validation(studentSignUpSchema), studentSignUp)
@@ -15,6 +15,6 @@ route.post("/api/student/signUp", validation(studentSignUpSchema), studentSignUp
 route.post("/api/student/profile/update",protectedRoutes, updateStudentProfile)
 
 // Company signup route
-route.post("/api/company/signUp", companySignUp)
+route.post("/api/company/signUp", validation(companySignUpSchema), companySignUp)
 
 module.exports = route

@@ -1,17 +1,13 @@
 const student = require("../models/student.model");
-const bcrypt = require("bcrypt")
-
+const hashPassword = require("../middlewares/helperfunctions/hashPassword.helper").hashPassword;
 async function studentSignUp (req, res){
-    // Declaring salt
-    const salt = await bcrypt.genSalt(10)
-
     // destructuring req.body
     const {email, lastname, firstname, password , phoneNumber} = req.body;
-    const hashedPassword = await bcrypt.hash(password,salt)
+    const hashedPassword = await hashPassword(password)
     try {
         const newStudent = await student.create({
             email, 
-            lastname, 
+            lastname,
             firstname, 
             password : hashedPassword,
             phoneNumber
@@ -23,7 +19,6 @@ async function studentSignUp (req, res){
 
         if(error.code == 11000)  return res.status(400).json({error: "Provide a valid email"});
         return res.status(400).json({error:error.message});
-
     }
 }
 
@@ -63,8 +58,28 @@ async function changeStudentPassword (req,res){
     }
 }
 
+
 async function companySignUp (req, res){
-    
+    // destructuring req.body
+    const {email, password, firstname, lastname, phoneNumber, orgName} = req.body;
+    const hashedPassword = await hashPassword(password);
+    try {
+        const newCompany = await student.create({
+            orgName,
+            email, 
+            lastname, 
+            firstname, 
+            password : hashedPassword,
+            phoneNumber
+        });
+        console.log("created new company @" + newCompany);
+        return res.status(201).json(newCompany);
+    } catch (error) {
+        console.log(error.message);
+        if(error.code == 11000)  return res.status(400).json({error: "Provide a valid email"});
+        return res.status(400).json({error:error.message});
+    }
+
 }
 
 module.exports = {
