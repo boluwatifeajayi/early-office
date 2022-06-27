@@ -32,6 +32,15 @@ export default function Home() {
         <Link href="/apply">
           <a className='short-btn'>apply</a>
         </Link>
+        <Link href="/companyProfile">
+          <a className='short-btn'>company profile</a>
+        </Link>
+        <Link href="/companyDashboard">
+          <a className='short-btn'>Company Dashboard</a>
+        </Link>
+        <Link href="/postInternship">
+          <a className='short-btn'>Post Internship</a>
+        </Link>
       </div>
      
     </div>
