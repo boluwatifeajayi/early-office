@@ -20,7 +20,10 @@ async function studentSignUp (req, res){
         return res.status(201).json(newStudent);
     } catch (error) {
         console.log(error.message);
+
+        if(error.code == 11000)  return res.status(400).json({error: "Provide a valid email"});
         return res.status(400).json({error:error.message});
+
     }
 }
 

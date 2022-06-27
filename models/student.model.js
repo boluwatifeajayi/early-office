@@ -1,13 +1,11 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const studentSchema = mongoose.Schema({
     firstname : {
         type:String,
-        required:true
     },
     lastname:{
         type:String,
-        required:true
     },
     email:{
         type:String,
@@ -16,11 +14,9 @@ const studentSchema = mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
     },
     phoneNumber:{
         type:String,
-        required:true
     }, 
     currentLocation:{
         type:String,
