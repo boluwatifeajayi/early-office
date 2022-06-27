@@ -11,7 +11,7 @@ async function studentSignIn(req,res){
     
         const passwordCompare = await bcrypt.compare(password,currentStudent.password);
         if(passwordCompare){
-            const token = jwt.sign({email},process.env.TOKEN_KEY)
+            const token = jwt.sign({id : currentStudent._id.toString(), email},process.env.TOKEN_KEY)
             const response = {
                 currentStudent,
                 authToken : token
@@ -22,6 +22,7 @@ async function studentSignIn(req,res){
         }        
     } catch (error) {
         console.log(error.message);
+        return res.status(500).json("Server error")
     }
     
 }

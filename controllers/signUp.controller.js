@@ -26,7 +26,25 @@ async function studentSignUp (req, res){
 
 async function updateStudentProfile (req,res){
     try{
-        const { firstname, lastname, currentLocation, preferredLanguage, status, fieldOfInterest, graduation, workExperience, reasonToHire, jobAvailability} = req.body
+        const {id} = res.locals.decodedToken;
+        const {firstname, lastname, currentLocation, preferredLanguage, status, fieldOfInterest, graduation, workExperience, reasonToHire, jobAvailability} = req.body;
+        console.log("res.locals",res.locals);
+        const x = await student.findOneAndUpdate({_id : id},
+            {
+                firstname, 
+                lastname, 
+                currentLocation, 
+                preferredLanguage, 
+                status, 
+                fieldOfInterest,
+                graduation, 
+                workExperience, 
+                reasonToHire, 
+                jobAvailability
+            },{
+                new : true
+            })
+        return res.json(x)
     }catch(error){
         console.log(error.message);
         return res.status(400).json({error:error.message});
