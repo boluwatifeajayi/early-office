@@ -24,37 +24,33 @@ const studentSchema = mongoose.Schema({
     }, 
     currentLocation:{
         type:String,
-        required:true
     },
     preferredLanguage:{
         type:String,
-        required:true
     },
     status:{
         type:String,
-        required:true
     },
     fieldOfInterest:{
         type:[String],
-        required:true
     },
     graduation:[ 
     {    
         status:{
             type:String,
-            required:true
+
         },
         schoolName:{
             type:String,
-            required:true
+
         },
         startYear:{
             type:String,
-            required:true
+
         },
         degree:{
             type:String,
-            required:true
+
         },
         gpa:{
             type:String
@@ -90,7 +86,6 @@ const studentSchema = mongoose.Schema({
     }],
     skills:{
         type:[String],
-        required:true
     }, 
     workSamples:[
         {
@@ -107,11 +102,9 @@ const studentSchema = mongoose.Schema({
     ], 
     reasonToHire:{
         type:String, 
-        required:true
     }, 
     jobAvailability:{
         type:String,
-        required:true
     }
 
 })
