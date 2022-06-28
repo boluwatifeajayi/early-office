@@ -7,7 +7,7 @@ const jobSchema = new mongoose.Schema(
     },
 
     jobResponsibility: {
-      type: String,
+      type: [String],
     },
 
     jobType: {

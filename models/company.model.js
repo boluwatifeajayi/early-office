@@ -1,13 +1,21 @@
 const mongoose = require('mongoose');
 
 const companySchema = mongoose.Schema({
-    firstname:{
+    AdminFirstName:{
         type:String, 
     },
-    lastname:{
+
+    AdminLastName:{
         type:String, 
     },
-    password:{
+
+    orgEmail : {
+        type : String, 
+        required:true,
+        unique:true
+    },
+
+    orgPassword:{
         type:String, 
     },
     phoneNumber:{

@@ -35,19 +35,20 @@ async function studentSignIn(req, res) {
 }
 
 async function companySignIn(req, res) {
-  const { email, password } = req.body;
+  const { orgEmail, orgPassword } = req.body;
   try {
-    const currentCompany = await company.findOne({ email });
+    const currentCompany = await company.findOne({ orgEmail });
     if (currentCompany == null || typeof currentCompany == undefined)
       return res.status(401).json({ error: "User does not exist" });
 
+      console.log(req.body, currentCompany)
     const passwordCompare = await bcrypt.compare(
-      password,
-      currentCompany.password
+      orgPassword,
+      currentCompany.orgPassword
     );
     if (passwordCompare) {
       const token = jwt.sign(
-        { id: currentCompany._id.toString(), email },
+        { id: currentCompany._id.toString(), orgEmail },
         process.env.TOKEN_KEY
       );
       const response = {

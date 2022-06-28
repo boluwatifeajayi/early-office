@@ -20,6 +20,7 @@ async function updateStudentProfile (req,res){
             },{
                 new : true
             })
+            console.log(id)
         return res.json(x)
     }catch(error){
         console.log(error.message);

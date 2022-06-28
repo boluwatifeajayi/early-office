@@ -7,13 +7,15 @@ const studentSignUpSchema = joi.object().keys({
     password : joi.string().required().label("Student password"),
     phoneNumber : joi.string().required().label("Student phone number"),
 });
+
 const companySignUpSchema = joi.object().keys({
-    firstname : joi.string().required().label("first name"),
-    lastname : joi.string().required().label("last name"),
-    email : joi.string().email().required().label("Company email"),
-    password : joi.string().required().label("Company password"),
+    AdminFirstName : joi.string().required().label("Admin first name"),
+    AdminLastName : joi.string().required().label("Admin last name"),
+    orgEmail : joi.string().email().required().label("Company email"),
+    orgPassword : joi.string().required().label("Company password"),
     phoneNumber : joi.string().required().label("Company phone number"),
-    orgName: joi.string().required().label("Company name")
+    orgName: joi.string().required().label("Company name"),
+    orgDescription : joi.string().required().label("Company description")
 })
 
 module.exports = {

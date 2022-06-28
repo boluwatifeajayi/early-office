@@ -15,7 +15,7 @@ const createJob = async (req, res) => {
     location,
   } = req.body;
   try {
-    const newJob = jobModel.create({
+    const newJob = await jobModel.create({
       Role,
       jobResponsibility,
       jobType,
@@ -39,7 +39,7 @@ const createJob = async (req, res) => {
 
 const getAllJobs = async (req, res) => {
   try {
-    const allJobs = jobModel.find();
+    const allJobs = await jobModel.find();
     res.status(200).json(allJobs);
   } catch (error) {
     res.status(404).json({ error: "No jobs available" });
@@ -62,7 +62,7 @@ const getCompanyJobs = async (req, res) => {
 const getJobById = async (req, res) => {
   const { jobId } = req.params;
   try {
-    const currentJob = jobModel.findById(jobId);
+    const currentJob = await jobModel.findById(jobId);
     res.status(200).json(currentJob);
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -73,7 +73,7 @@ const getJobById = async (req, res) => {
 const getStateJobs = async (req, res) => {
   const { state } = req.params;
   try {
-    const currentJob = jobModel.find({location : {state : state}});
+    const currentJob = await jobModel.find({location : {state : state}});
     res.status(200).json(currentJob);
   } catch (error) {
     res.status(404).json({ error: error.message });
