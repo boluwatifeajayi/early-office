@@ -1,108 +1,108 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const studentSchema = mongoose.Schema({
-    firstname : {
-        type:String,
+const studentSchema = mongoose.Schema(
+  {
+    firstname: {
+      type: String,
     },
-    lastname:{
-        type:String,
+    lastname: {
+      type: String,
     },
-    email:{
-        type:String,
-        required:true,
-        unique:true
+    email: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    password:{
-        type:String,
+    password: {
+      type: String,
     },
-    phoneNumber:{
-        type:String,
-    }, 
-    currentLocation:{
-        type:String,
+    phoneNumber: {
+      type: String,
     },
-    preferredLanguage:{
-        type:String,
+    currentLocation: {
+      type: String,
     },
-    status:{
-        type:String,
+    preferredLanguage: {
+      type: String,
     },
-    fieldOfInterest:{
-        type:[String],
+    status: {
+      type: String,
     },
-    graduation:[ 
-    {    
-        status:{
-            type:String,
-
+    fieldOfInterest: {
+      type: [String],
+    },
+    graduation: [
+      {
+        status: {
+          type: String,
         },
-        schoolName:{
-            type:String,
-
+        schoolName: {
+          type: String,
         },
-        startYear:{
-            type:String,
-
+        startYear: {
+          type: String,
         },
-        degree:{
-            type:String,
-
+        degree: {
+          type: String,
         },
-        gpa:{
-            type:String
+        gpa: {
+          type: String,
         },
-        gpaScale:{
-            type:String
-        }
-    }],   
-    workExperience:[      
-    { 
-        company:{
-            type:String,
+        gpaScale: {
+          type: String,
         },
-        jobTitle:{
-            type:String,
+      },
+    ],
+    workExperience: [
+      {
+        company: {
+          type: String,
         },
-        certifications:[
-            {
-                issuerName:{
-                    type:String
-                },
-                issuingOrg:{
-                    type:String
-                },
-                issueDate:{
-                    type:String
-                },
-                credentialId:{
-                    type:String
-                }
-            }
+        jobTitle: {
+          type: String,
+        },
+        certifications: [
+          {
+            issuerName: {
+              type: String,
+            },
+            issuingOrg: {
+              type: String,
+            },
+            issueDate: {
+              type: String,
+            },
+            credentialId: {
+              type: String,
+            },
+          },
         ],
-    }],
-    skills:{
-        type:[String],
-    }, 
-    workSamples:[
-        {
-            sampleLink:{
-                type:String
-            },
-            coverLetter:{
-                type:String
-            },
-            cv:{
-                type:String
-            },
-        }
-    ], 
-    reasonToHire:{
-        type:String, 
-    }, 
-    jobAvailability:{
-        type:String,
-    }
-},{timestamps : true})
+      },
+    ],
+    skills: {
+      type: [String],
+    },
+    workSamples: [
+      {
+        sampleLink: {
+          type: String,
+        },
+        coverLetter: {
+          type: String,
+        },
+        cv: {
+          type: String,
+        },
+      },
+    ],
+    reasonToHire: {
+      type: String,
+    },
+    jobAvailability: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 
-
-module.exports = mongoose.model('student',studentSchema)
+module.exports = mongoose.model("student", studentSchema);
