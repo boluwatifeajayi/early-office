@@ -10,6 +10,7 @@ const helmet = require("helmet")
 const signInRoute = require("./routes/signIn.route")
 const signUpRoute = require("./routes/signUp.route")
 const profileRoutes = require("./routes/profile/index.profile")
+const jobRoutes = require("./routes/job.route")
 
 
 // setting cors
@@ -30,10 +31,12 @@ app.use(express.urlencoded({extended : false}))
 app.use(signInRoute)
 app.use(signUpRoute)
 app.use(profileRoutes)
+app.use(jobRoutes)
 
 app.get("/",(req,res)=>{
   res.json("doneeee")
 })
+
 // Database connection and starting the server
 const PORT = process.env.PORT
 const SERVER = "localhost";
