@@ -41,6 +41,12 @@ export default function Home() {
         <Link href="/postInternship">
           <a className='short-btn'>Post Internship</a>
         </Link>
+        <Link href="/applicants">
+          <a className='short-btn'>Applicants</a>
+        </Link>
+        <Link href="/applicant">
+          <a className='short-btn'>Applicant</a>
+        </Link>
       </div>
      
     </div>

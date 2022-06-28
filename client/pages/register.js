@@ -18,9 +18,10 @@ export default function Register() {
         />
       </Head>
       <Header/>
-      <div className='container register-container'>
+      
+      <div className='register-container '>
         <div className='row'>
-            <div className='col-lg pl-4'>
+            <div className='col-lg pl-4 reg-bg'>
                 <h1 className='main-register-header'>Let Us Help You Get Started With Your Dream Career</h1>
                 <ul className='register-list'>
                     <li>Internships</li>
@@ -33,7 +34,7 @@ export default function Register() {
             </div>
             <div className='col-lg'>
                 <form className='register-form'>
-                    <h5 className='text-center mb-3 fw-bold'>Create Account</h5>
+                    <h5 className='text-center mb-3 fw-bold'>Create An Account</h5>
 
                     <ButtonField buttonText="Register With Google" buttonClass="bt-outline"/>
                     <p className='text-center pt-2'>Or</p>
@@ -60,9 +61,8 @@ export default function Register() {
                 </form>
             </div>
         </div>
-      </div>  
-    
-  
+       
+      </div>
       
     </div>
   )

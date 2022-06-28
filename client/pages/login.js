@@ -2,6 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import InputField from '../components/InputField'
 import ButtonField from '../components/ButtonField'
+import Header from '../components/Header'
 
 export default function Register() {
   return (
@@ -15,23 +16,16 @@ export default function Register() {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         />
       </Head>
-      
-      <div className='container'>
+      <Header/>
+      <div className='register-container'>
         <div className='row'>
-            <div className='col-lg down'>
-                <h1 className='main-register-header'>Welcome <br/>Back</h1>
-                <p>Login to your account to continue</p>
-                {/* <ul className='register-list'>
-                    <li>Internships</li>
-                    <li>Partime Gigs</li>
-                    <li>Remote Internships</li>
-                    <li>NYSC</li>
-                    <li>Benefits</li>
-                    <li>& More....</li>
-                </ul> */}
+            <div className='col-lg pl-4 log-bg'>
+                <h1 className='main-register-header inner'>Welcome <br/>Back</h1>
+                <p className='text-white inner'>Please Login to your account to continue</p>
+            
             </div>
             <div className='col-lg'>
-                <form className='register-form'>
+                <form className='register-form inner'>
                     <h4 className='text-center mt-4 mb-3 fw-bold'>Login To Your Account</h4>
 
                     <ButtonField buttonText="Login With Google" buttonClass="bt-outline"/>

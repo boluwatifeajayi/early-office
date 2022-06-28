@@ -5,7 +5,7 @@ import ButtonField from '../components/ButtonField'
 import Link from 'next/link'
 import Header from '../components/Header'
 
-export default function CompanyRegister() {
+export default function Register() {
   return (
     <div>
       <Head>
@@ -18,10 +18,11 @@ export default function CompanyRegister() {
         />
       </Head>
       <Header/>
-      <div className='container register-container'>
+      
+      <div className='register-container '>
         <div className='row'>
-            <div className='col-lg pl-4'>
-                <h1 className='main-register-header'>Push Your Company Further With The Best interns</h1>
+        <div className='col-lg pl-4 emp-reg'>
+                <h1 className='main-register-header'>Take Your Company Further With The Best interns</h1>
                 <ul className='register-list'>
                     <li>Interns</li>
                     <li>Corpers</li>
@@ -32,7 +33,7 @@ export default function CompanyRegister() {
             </div>
             <div className='col-lg'>
                 <form className='register-form'>
-                    <h5 className='text-center mb-3 fw-bold'>Create Account</h5>
+                    <h5 className='text-center mb-3 fw-bold'>Create An Account</h5>
 
                     <div className='row'>
                         <div className='col-md'>
@@ -56,10 +57,12 @@ export default function CompanyRegister() {
                       
                 </form>
             </div>
+
+
+
         </div>
-      </div>  
-    
-  
+       
+      </div>
       
     </div>
   )
