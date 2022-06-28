@@ -5,7 +5,7 @@ async function updateStudentProfile (req,res){
         const {id} = res.locals.decodedToken;
         const {firstname, lastname, currentLocation, preferredLanguage, status, fieldOfInterest, graduation, workExperience, reasonToHire, jobAvailability} = req.body;
         console.log("res.locals",res.locals);
-        const x = await studentModel.findOneAndUpdate({_id : id},
+        const updatedStudentProfile = await studentModel.findOneAndUpdate({_id : id},
             {
                 firstname, 
                 lastname, 
@@ -21,7 +21,7 @@ async function updateStudentProfile (req,res){
                 new : true
             })
             console.log(id)
-        return res.json(x)
+        return res.json(updatedStudentProfile)
     }catch(error){
         console.log(error.message);
         return res.status(400).json({error:error.message});
@@ -29,11 +29,16 @@ async function updateStudentProfile (req,res){
 }
 
 async function changeStudentPassword (req,res){
-    try{
-        // const re
+    try {
+        const { id } = res.locals.decodedToken
+        const {password} = req.body
+
+        const updatedStudentProfile = await investmentCompanyModel.findByIdAndUpdate(id, 
+        {password},
+        { new : true })
+        return res.status(200).json(updatedStudentProfile)
     }catch(error){
-        console.log(error.message);
-        return res.status(400).json({error:error.message});
+        return res.status(500).json({error : "Server Error"})
     }
 }
 
