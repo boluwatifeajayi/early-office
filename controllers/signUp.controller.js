@@ -21,11 +21,13 @@ async function studentSignUp (req, res){
             { id: newStudent._id.toString(), email },
             process.env.TOKEN_KEY
         );
+
         const response = {
             newStudent,
             authToken: token,
         };
 
+        res.cookie("authToken",token)
         return res.status(201).json(response);
     } catch (error) {
         console.log(error.message);
@@ -64,6 +66,8 @@ async function companySignUp (req, res){
             newCompany,
             authToken: token,
           };
+        
+          res.cookie("authToken",token)
         return res.status(201).json(response);
     } catch (error) {
         console.log(error.message);

@@ -4,7 +4,7 @@ const dbConnect = require("./middlewares/dbUtil/dbconnect");
 const app = express();
 const cors = require("cors")
 const helmet = require("helmet")
-
+const cookieParser = require("cookie-parser")
 
 // Requiring routes
 const signInRoute = require("./routes/signIn.route")
@@ -26,6 +26,7 @@ app.use(helmet())
 app.use(cors(corsOption))
 app.use(express.json())
 app.use(express.urlencoded({extended : false}))
+app.use(cookieParser())
 
 
 // Using routes
