@@ -1,4 +1,5 @@
 const express = require("express");
+const { oauthSignup } = require("../controllers/signUp.controller");
 const validation = require("../middlewares/validation/validation");
 
 const { studentSignUpSchema, companySignUpSchema } = require("../middlewares/validation/validation.Schema/signUp.schema");
@@ -10,7 +11,7 @@ var route = express.Router();
 route.post("/api/student/signUp", validation(studentSignUpSchema), studentSignUp)
 
 // Student oauth route
-route.post("/api/oauth/google/signUp", )
+// route.post("/api/oauth/google/signUp", oauthSignup)
 
 
 

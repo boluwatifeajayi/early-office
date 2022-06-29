@@ -1,6 +1,8 @@
 const companyModel = require("../models/company.model");
 const studentModel = require("../models/student.model");
 const hashPassword = require("../middlewares/helperfunctions/hashPassword.helper").hashPassword;
+const jwt = require("jsonwebtoken")
+
 async function studentSignUp (req, res){
     // destructuring req.body
     const {email, lastname, firstname, password , phoneNumber} = req.body;
@@ -14,7 +16,17 @@ async function studentSignUp (req, res){
             phoneNumber
         })
         console.log("created new student @" + newStudent);
-        return res.status(201).json(newStudent);
+
+        const token = jwt.sign(
+            { id: newStudent._id.toString(), email },
+            process.env.TOKEN_KEY
+        );
+        const response = {
+            newStudent,
+            authToken: token,
+        };
+
+        return res.status(201).json(response);
     } catch (error) {
         console.log(error.message);
 
@@ -43,7 +55,16 @@ async function companySignUp (req, res){
             orgDescription
         });
         console.log("created new company @" + newCompany);
-        return res.status(201).json(newCompany);
+
+        const token = jwt.sign(
+            { id: newCompany._id.toString(), orgEmail },
+            process.env.TOKEN_KEY
+          );
+          const response = {
+            newCompany,
+            authToken: token,
+          };
+        return res.status(201).json(response);
     } catch (error) {
         console.log(error.message);
         if(error.code == 11000)  return res.status(400).json({error: "Account already exists"});
@@ -52,7 +73,17 @@ async function companySignUp (req, res){
 
 }
 
+
+async function oauthSignup (req,res) {
+    try{
+
+    }catch(error){
+
+    }
+}
+
 module.exports = {
     studentSignUp,
-    companySignUp
+    companySignUp,
+    oauthSignup
 }
