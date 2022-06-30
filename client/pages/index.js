@@ -1,9 +1,13 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 // import styles from '../styles/Home.module.css'
-import Header from '../components/Header';
-import Navbar from '../components/Navbar';
+import Header from "../components/Header";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Internships from "../components/Internships";
+import WhatsGreat from "../components/WhatsGreat";
+import Cr from "../components/Cr";
 
 export default function Home() {
   return (
@@ -14,41 +18,44 @@ export default function Home() {
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header/>
+      <Header />
 
-      <div className='container-main'>
+      {/* <div className="container-main">
         <Link href="/register">
-          <a className='short-btn'>Register</a>
+          <a className="short-btn">Register</a>
         </Link>
         <Link href="/studentProfile">
-          <a className='short-btn'>Profile Setup</a>
+          <a className="short-btn">Profile Setup</a>
         </Link>
         <Link href="/jobListing">
-          <a className='short-btn'>Jobs</a>
+          <a className="short-btn">Jobs</a>
         </Link>
         <Link href="/job">
-          <a className='short-btn'>Job</a>
+          <a className="short-btn">Job</a>
         </Link>
         <Link href="/apply">
-          <a className='short-btn'>apply</a>
+          <a className="short-btn">apply</a>
         </Link>
         <Link href="/companyProfile">
-          <a className='short-btn'>company profile</a>
+          <a className="short-btn">company profile</a>
         </Link>
         <Link href="/companyDashboard">
-          <a className='short-btn'>Company Dashboard</a>
+          <a className="short-btn">Company Dashboard</a>
         </Link>
         <Link href="/postInternship">
-          <a className='short-btn'>Post Internship</a>
+          <a className="short-btn">Post Internship</a>
         </Link>
         <Link href="/applicants">
-          <a className='short-btn'>Applicants</a>
+          <a className="short-btn">Applicants</a>
         </Link>
         <Link href="/applicant">
-          <a className='short-btn'>Applicant</a>
+          <a className="short-btn">Applicant</a>
         </Link>
-      </div>
-     
+      </div> */}
+      <Cr />
+      <WhatsGreat />
+      <Internships />
+      <Footer />
     </div>
-  )
+  );
 }
