@@ -6,8 +6,8 @@ const {
   studentSignUpSchema,
   companySignUpSchema,
 } = require("../middlewares/validation/validation.Schema/signUp.schema");
-const studentSignUp = require("../controllers/signUp.controller").studentSignUp;
-const companySignUp = require("../controllers/signUp.controller").companySignUp;
+const {studentSignUp} = require("../controllers/signUp.controller");
+const {companySignUp} = require("../controllers/signUp.controller");
 var route = express.Router();
 
 // Student signup route

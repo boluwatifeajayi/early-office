@@ -89,8 +89,7 @@ async function companySignUp(req, res) {
 async function oauthSignup(req, res) {
   try {
     console.log("NEW REQUEST!!!");
-    const CLIENT_ID =
-      "906540842423-7ki40si5b62f8dvlem89emrm28vk83rm.apps.googleusercontent.com";
+    const CLIENT_ID = "906540842423-7ki40si5b62f8dvlem89emrm28vk83rm.apps.googleusercontent.com";
     const CLIENT_SECRET = "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";
     const REDIRECT_URI = "http://localhost:4500/api/oauth/google/signup";
     const SIGN_WITH_GOOGLE = `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.profile&include_granted_scopes=true&response_type=code&state=state&redirect_uri=${REDIRECT_URI}&client_id=${CLIENT_ID}`;

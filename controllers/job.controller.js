@@ -12,10 +12,10 @@ const createJob = async (req, res) => {
     duration,
     location,
   } = req.body;
-  const { companyId } = req.params;
+  const { companyName} = req.params;
 
   try {
-    companyModel.findById(companyId);
+    const {_id:companyId} = await companyModel.findOne({orgName: companyName});
     const newJob = await jobModel.create({
       Role,
       jobResponsibility,
@@ -98,6 +98,14 @@ const getSalaryJobs = async (req, res) => {
   }
 };
 
+const applyToJob = async (req, res) =>{
+  let studentid;
+  const {covertext} = req.body;
+  const {jobid} = req.params;
+  await jobModel.findByIdAndUpdate(jobid, {covertext, student:[...students, studentid]});
+  await newJobRelations.findOneAndUpdate({jobid}, {covertext, student:[...students, studentid]});
+}
+
 module.exports = {
   createJob,
   getAllJobs,
@@ -106,4 +114,5 @@ module.exports = {
   getStateJobs,
   getTypeJobs,
   getSalaryJobs,
+  applyToJob
 };
