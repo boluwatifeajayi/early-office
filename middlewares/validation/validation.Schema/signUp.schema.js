@@ -8,6 +8,13 @@ const studentSignUpSchema = joi.object().keys({
     phoneNumber : joi.string().required().label("Student phone number"),
 });
 
+const oAuthStudentSignUpSchema = joi.object().keys({
+    firstname : joi.string().required().label("Student first name"),
+    lastname : joi.string().required().label("Student last name"),
+    email : joi.string().email().required().label("Student email"),
+    password : joi.string().required().label("Student password"),
+});
+
 const companySignUpSchema = joi.object().keys({
     AdminFirstName : joi.string().required().label("Admin first name"),
     AdminLastName : joi.string().required().label("Admin last name"),
@@ -20,5 +27,6 @@ const companySignUpSchema = joi.object().keys({
 
 module.exports = {
     studentSignUpSchema, 
-    companySignUpSchema
+    companySignUpSchema,
+    oAuthStudentSignUpSchema
 }
