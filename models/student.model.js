@@ -95,12 +95,6 @@ const studentSchema = mongoose.Schema(
         },
       },
     ],
-    reasonToHire: {
-      type: String,
-    },
-    jobAvailability: {
-      type: String,
-    },
   },
   { timestamps: true }
 );

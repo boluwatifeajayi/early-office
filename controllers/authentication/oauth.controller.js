@@ -51,7 +51,7 @@ async function googleOAuth(req, res) {
         if(error.code == 11000){
             const currentStudent = studentModel.findOne({email : oAuthStudent.email})
             const token = jwt.sign(
-                { id: currentStudent._id.toString(), oAuthStudent.email },
+                { id: currentStudent._id.toString(), email: oAuthStudent.email },
                 process.env.TOKEN_KEY
             );
             const response = {

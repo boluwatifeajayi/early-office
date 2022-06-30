@@ -2,22 +2,19 @@ const jobModel = require("../models/job.model");
 const companyModel = require("../models/company.model");
 
 const createJob = async (req, res) => {
-  const {
-    Role,
-    jobResponsibility,
-    jobType,
-    NumberOfOpenings,
-    SkillsNeeded,
-    salary,
-    duration,
-    location,
-  } = req.body;
-  const { companyName } = req.params;
-
   try {
-    const { _id: companyId } = await companyModel.findOne({
-      orgName: companyName,
-    });
+    const {
+      Role,
+      jobResponsibility,
+      jobType,
+      NumberOfOpenings,
+      SkillsNeeded,
+      salary,
+      duration,
+      location,
+    } = req.body;
+    const { companyName } = req.params;
+    const { _id: companyId } = await companyModel.findOne({orgName: companyName});
     const newJob = await jobModel.create({
       Role,
       jobResponsibility,
@@ -59,8 +56,8 @@ const getCompanyJobs = async (req, res) => {
 };
 
 const getJobById = async (req, res) => {
-  const { jobId } = req.params;
   try {
+    const { jobId } = req.params;
     const currentJob = await jobModel.findById(jobId);
     res.status(200).json(currentJob);
   } catch (error) {
@@ -69,8 +66,8 @@ const getJobById = async (req, res) => {
 };
 
 const getStateJobs = async (req, res) => {
-  const { state } = req.params;
   try {
+    const { state } = req.params;
     const currentJob = await jobModel.find({ location: { state: state } });
     res.status(200).json(currentJob);
   } catch (error) {
@@ -79,8 +76,8 @@ const getStateJobs = async (req, res) => {
 };
 
 const getTypeJobs = async (req, res) => {
-  const { type } = req.params;
   try {
+    const { type } = req.params;
     const currentJob = jobModel.find({ type });
     res.status(200).json(currentJob);
   } catch (error) {
@@ -89,8 +86,8 @@ const getTypeJobs = async (req, res) => {
 };
 
 const getSalaryJobs = async (req, res) => {
-  const { minSalary, maxSalary } = req.query;
   try {
+    const { minSalary, maxSalary } = req.query;
     const currentJob = jobModel.find({
       salary: { $gt: minSalary, $lt: maxSalary },
     });
@@ -101,18 +98,13 @@ const getSalaryJobs = async (req, res) => {
 };
 
 const applyToJob = async (req, res) => {
-  let studentid;
-  const { covertext } = req.body;
-  const { jobid } = req.params;
   try {
-    await jobModel.findByIdAndUpdate(jobid, {
-      covertext,
-      student: [...students, studentid],
-    });
-    await newJobRelations.findOneAndUpdate(
-      { jobid },
-      { covertext, student: [...students, studentid] }
-    );
+    const {studentId} = res.locals.decodedToken;
+    if (studentId == null) return res.status(400).json({error : "Ensure you are a student to access this route"})
+    const { reasonToBeHired, jobAvailability } = req.body;
+    const { jobid } = req.params;
+    const newJobApplication =  await jobModel.findByIdAndUpdate(jobid, {$push:{ student:  { studentId, reasonToBeHired, jobAvailability }}}, {new: true});
+  res.status(201).json(newJobApplication);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

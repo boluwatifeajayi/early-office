@@ -52,6 +52,19 @@ const jobSchema = new mongoose.Schema(
     additionalInformation: {
       type: String,
     },
+    student:[
+      { 
+        studentId: {
+          type: String,
+        },
+        reasonToBeHired: {
+          type: String,
+        },
+        jobAvailability: {
+          type: String,
+        },
+      }
+    ]
   },
   { timestamps: true }
 );

@@ -8,7 +8,8 @@ var route = express.Router();
 route.post("/api/Company/profile/update",protectedRoutes, updateCompanyProfile)
 
 // Change Company password
-route.post("/api/Company/change/password",protectedRoutes,changeStudentPassword)
+// route.post("/api/Company/change/password",protectedRoutes,changeStudentPassword)
+route.post("/api/Company/profile/update/password",protectedRoutes,changeStudentPassword)
 
 
 module.exports = route;
