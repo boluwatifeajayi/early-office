@@ -1,5 +1,5 @@
 const express = require("express");
-const { oauthSignup, studentSignUp, companySignUp } = require("../../controllers/authentication/signUp.controller");
+const { studentSignUp, companySignUp } = require("../../controllers/authentication/signUp.controller");
 const validation = require("../../middlewares/validation/validation");
 
 const {
@@ -15,8 +15,6 @@ route.post(
   studentSignUp
 );
 
-// Student oauth route
-route.get("/api/oauth/google/signup", oauthSignup);
 
 // Company signup route
 route.post(
