@@ -12,10 +12,12 @@ const createJob = async (req, res) => {
     duration,
     location,
   } = req.body;
-  const { companyName} = req.params;
+  const { companyName } = req.params;
 
   try {
-    const {_id:companyId} = await companyModel.findOne({orgName: companyName});
+    const { _id: companyId } = await companyModel.findOne({
+      orgName: companyName,
+    });
     const newJob = await jobModel.create({
       Role,
       jobResponsibility,
@@ -98,13 +100,23 @@ const getSalaryJobs = async (req, res) => {
   }
 };
 
-const applyToJob = async (req, res) =>{
+const applyToJob = async (req, res) => {
   let studentid;
-  const {covertext} = req.body;
-  const {jobid} = req.params;
-  await jobModel.findByIdAndUpdate(jobid, {covertext, student:[...students, studentid]});
-  await newJobRelations.findOneAndUpdate({jobid}, {covertext, student:[...students, studentid]});
-}
+  const { covertext } = req.body;
+  const { jobid } = req.params;
+  try {
+    await jobModel.findByIdAndUpdate(jobid, {
+      covertext,
+      student: [...students, studentid],
+    });
+    await newJobRelations.findOneAndUpdate(
+      { jobid },
+      { covertext, student: [...students, studentid] }
+    );
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 module.exports = {
   createJob,
@@ -114,5 +126,5 @@ module.exports = {
   getStateJobs,
   getTypeJobs,
   getSalaryJobs,
-  applyToJob
+  applyToJob,
 };

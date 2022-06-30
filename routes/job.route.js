@@ -8,9 +8,8 @@ const {
   applyToJob,
   getAllJobs,
   getCompanyJobs,
-  getJobById
+  getJobById,
 } = require("../controllers/job.controller");
-
 
 // Create job
 // route.post("/api/job/create", createJob);
@@ -38,9 +37,9 @@ route.get("/api/jobs/type/:type", getTypeJobs);
 // route.post("/api/jobs/role/:skills",);
 
 // Get job by Salary. <Using query params> i.e minSalary and maxSalary
-route.post("/api/jobs/salary", getSalaryJobs);
+route.get("/api/jobs/salary", getSalaryJobs);
 
 // TO APPLY FOR A PARTICULAR JOB
-route.post("api/jobs/:jobid/apply", applyToJob)
+route.post("api/jobs/:jobid/apply", applyToJob);
 
 module.exports = route;
