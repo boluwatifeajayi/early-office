@@ -22,7 +22,7 @@ async function studentSignUp(req, res) {
     console.log("created new student @" + newStudent);
 
     const token = jwt.sign(
-      { id: newStudent._id.toString(), email },
+      { studentId: newStudent._id.toString(), email },
       process.env.TOKEN_KEY
     );
 
@@ -68,7 +68,7 @@ async function companySignUp(req, res) {
     console.log("created new company @" + newCompany);
 
     const token = jwt.sign(
-      { id: newCompany._id.toString(), orgEmail },
+      { companyId: newCompany._id.toString(), orgEmail },
       process.env.TOKEN_KEY
     );
     const response = {

@@ -17,7 +17,7 @@ async function studentSignIn(req, res) {
     );
     if (passwordCompare) {
       const token = jwt.sign(
-        { id: currentStudent._id.toString(), email },
+        { studentId: currentStudent._id.toString(), email },
         process.env.TOKEN_KEY
       );
       const response = {
@@ -50,7 +50,7 @@ async function companySignIn(req, res) {
     );
     if (passwordCompare) {
       const token = jwt.sign(
-        { id: currentCompany._id.toString(), orgEmail },
+        { companyId: currentCompany._id.toString(), orgEmail },
         process.env.TOKEN_KEY
       );
       const response = {
