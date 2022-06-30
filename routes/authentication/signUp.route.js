@@ -1,13 +1,11 @@
 const express = require("express");
-const { oauthSignup } = require("../controllers/signUp.controller");
-const validation = require("../middlewares/validation/validation");
+const { oauthSignup, studentSignUp, companySignUp } = require("../../controllers/authentication/signUp.controller");
+const validation = require("../../middlewares/validation/validation");
 
 const {
   studentSignUpSchema,
   companySignUpSchema,
-} = require("../middlewares/validation/validation.Schema/signUp.schema");
-const {studentSignUp} = require("../controllers/signUp.controller");
-const {companySignUp} = require("../controllers/signUp.controller");
+} = require("../../middlewares/validation/validation.Schema/signUp.schema");
 var route = express.Router();
 
 // Student signup route

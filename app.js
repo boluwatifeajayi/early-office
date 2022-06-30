@@ -7,8 +7,7 @@ const helmet = require("helmet")
 const cookieParser = require("cookie-parser")
 
 // Requiring routes
-const signInRoute = require("./routes/signIn.route")
-const signUpRoute = require("./routes/signUp.route")
+const authentication = require("./routes/authentication/indexAuthentication.route")
 const studentRoutes = require("./routes/student.route")
 const profileRoutes = require("./routes/profile/index.profile")
 const jobRoutes = require("./routes/job.route")
@@ -30,8 +29,7 @@ app.use(cookieParser())
 
 
 // Using routes
-app.use(signInRoute)
-app.use(signUpRoute)
+app.use(authentication)
 app.use(studentRoutes)
 app.use(profileRoutes)
 app.use(jobRoutes)

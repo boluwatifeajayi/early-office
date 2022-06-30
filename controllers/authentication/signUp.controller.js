@@ -1,10 +1,10 @@
-const companyModel = require("../models/company.model");
-const studentModel = require("../models/student.model");
+const companyModel = require("../../models/company.model");
+const studentModel = require("../../models/student.model");
 const oAuthstudentSignUpSchema =
-  require("../middlewares/validation/validation.Schema/signUp.schema").oAuthStudentSignUpSchema;
+  require("../../middlewares/validation/validation.Schema/signUp.schema").oAuthStudentSignUpSchema;
 const axios = require("axios");
 const hashPassword =
-  require("../middlewares/helperfunctions/hashPassword.helper").hashPassword;
+  require("../../middlewares/helperfunctions/hashPassword.helper").hashPassword;
 const jwt = require("jsonwebtoken");
 
 async function studentSignUp(req, res) {
