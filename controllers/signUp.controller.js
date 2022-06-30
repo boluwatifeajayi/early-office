@@ -1,6 +1,7 @@
 const companyModel = require("../models/company.model");
 const studentModel = require("../models/student.model");
-const oAuthstudentSignUpSchema = require("../middlewares/validation/validation.Schema/signUp.schema").oAuthStudentSignUpSchema;
+const oAuthstudentSignUpSchema =
+  require("../middlewares/validation/validation.Schema/signUp.schema").oAuthStudentSignUpSchema;
 const axios = require("axios");
 const hashPassword =
   require("../middlewares/helperfunctions/hashPassword.helper").hashPassword;
@@ -88,7 +89,8 @@ async function companySignUp(req, res) {
 async function oauthSignup(req, res) {
   try {
     console.log("NEW REQUEST!!!");
-    const CLIENT_ID ="906540842423-7ki40si5b62f8dvlem89emrm28vk83rm.apps.googleusercontent.com";
+    const CLIENT_ID =
+      "906540842423-7ki40si5b62f8dvlem89emrm28vk83rm.apps.googleusercontent.com";
     const CLIENT_SECRET = "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";
     const REDIRECT_URI = "http://localhost:4500/api/oauth/google/signup";
     const SIGN_WITH_GOOGLE = `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.profile&include_granted_scopes=true&response_type=code&state=state&redirect_uri=${REDIRECT_URI}&client_id=${CLIENT_ID}`;
@@ -99,33 +101,38 @@ async function oauthSignup(req, res) {
     console.log(response.data);
     const { access_token } = response.data;
     console.log("access token =  " + access_token);
-    const getUserData = await axios.get(`https://www.googleapis.com/oauth2/v2/userinfo?access_token=${access_token}`);
-    const {email, given_name: firstname,family_name: lastname} = getUserData.data;
-    const password = Date.now().toString(36) + Math.floor(Math.pow(10, 12) + Math.random() * 9*Math.pow(10, 12)).toString(36);
-    const oAuthStudent = {email, firstname, lastname, password};
-    
-    const validationResult = oAuthstudentSignUpSchema.validate(oAuthStudent);
-    const {error} = validationResult;
-    const valid = error == null; 
+    const getUserData = await axios.get(
+      `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${access_token}`
+    );
+    const {
+      email,
+      given_name: firstname,
+      family_name: lastname,
+    } = getUserData.data;
+    const password =
+      Date.now().toString(36) +
+      Math.floor(
+        Math.pow(10, 12) + Math.random() * 9 * Math.pow(10, 12)
+      ).toString(36);
+    const oAuthStudent = { email, firstname, lastname, password };
 
-    if (valid){
+    const validationResult = oAuthstudentSignUpSchema.validate(oAuthStudent);
+    const { error } = validationResult;
+    const valid = error == null;
+
+    if (valid) {
       req.body = oAuthStudent;
       console.log(req.body);
       await studentSignUp(req, res);
-    }
-    else { 
-      const { details } = error; 
-      const message = details.map(detail => detail.message).join(',');
-      console.log("error", message); 
+    } else {
+      const { details } = error;
+      const message = details.map((detail) => detail.message).join(",");
+      console.log("error", message);
       res.status(422).json({ error: message });
-    // NOW WE CAN TOKENIZE THE CURRENT DATA WE HAVE USING THE EMAIL AND ...
-    // NOTE: IDK HOW WE'D SET PASSWORD FOR THE USER
-    // const token = jwt.sign({ id: newStudent._id.toString(), email}, process.env.TOKEN_KEY);
-    //    const response = {newStudent ,authToken: token};
     }
   } catch (error) {
-      return res.status(400).json({ error: error.message });
-    }
+    return res.status(400).json({ error: error.message });
+  }
 }
 
 module.exports = {
