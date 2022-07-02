@@ -15,6 +15,7 @@ const createJob = async (req, res) => {
   try {
     const {
       role,
+      jobName,
       jobResponsibility,
       jobType,
       numberOfOpenings,
@@ -28,6 +29,7 @@ const createJob = async (req, res) => {
     const { orgId, orgEmail } = currentOrg;
     const newJob = await jobModel.create({
       role,
+      jobName,
       jobResponsibility,
       jobType,
       numberOfOpenings,
@@ -125,6 +127,7 @@ const applyToJob = async (req, res) => {
     const { reasonToBeHired, jobAvailability } = req.body;
     const { jobid } = req.params;
     const appliedAt = Date.now();
+    const getStudent = studentModel.findById(studentId);
     const newJobApplication = await jobModel.findByIdAndUpdate(
       jobid,
       {
@@ -136,8 +139,8 @@ const applyToJob = async (req, res) => {
     );
 
     await mailSender(...orgName, {
-      title: createJobTitle(newJob),
-      body: createJobBody(newJob),
+      title: appliedToJobTitle(newJob, getStudent),
+      body: appliedToJobBody(newJob, getStudent),
     });
     res.status(201).json(newJobApplication);
   } catch (error) {

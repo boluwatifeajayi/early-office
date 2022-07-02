@@ -33,7 +33,7 @@ const companySchema = mongoose.Schema(
       website: {
         type: String,
       },
-      socialHandles: [Object],
+      socialHandles: {type:Object},
       officalDocs: {
         type: String,
       },

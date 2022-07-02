@@ -1,5 +1,6 @@
 const express = require("express");
-const jobapplySchema = require("../middlewares/validation/validation.Schema/jobApplication.schema");
+const jobapplySchema = require("../middlewares/validation/validation.Schema/Jobs/jobApplication.schema");
+const createJobSchema = require("../middlewares/validation/validation.Schema/Jobs/createJob.schema")
 const validation = require("../middlewares/validation/validation");
 var route = express.Router();
 const { protectedRoutes } = require("../middlewares/authentication/protectedRoutes");
@@ -16,7 +17,7 @@ const {
 
 // Create job
 // route.post("/api/job/create", createJob);
-route.post("/api/:companyName/job/create", createJob);
+route.post("/api/:companyName/job/create",protectedRoutes, validation(createJobSchema), createJob);
 
 // Get all jobs
 route.get("/api/jobs", getAllJobs);
@@ -44,6 +45,6 @@ route.get("/api/jobs/salary", getSalaryJobs);
 
 // TO APPLY FOR A PARTICULAR JOB
 
-route.post("/api/jobs/:jobid/apply", protectedRoutes, validation, applyToJob);
+route.post("/api/jobs/:jobid/apply", protectedRoutes, validation(jobapplySchema), applyToJob);
 
 module.exports = route;

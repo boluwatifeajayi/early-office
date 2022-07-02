@@ -5,6 +5,9 @@ const jobSchema = new mongoose.Schema(
     role: {
       type: String,
     },
+    jobName:{
+      type:String
+    },
 
     jobResponsibility: {
       type: [String],
@@ -15,7 +18,7 @@ const jobSchema = new mongoose.Schema(
     },
 
     numberOfOpenings: {
-      type: Number,
+      type: String,
     },
 
     org: {
