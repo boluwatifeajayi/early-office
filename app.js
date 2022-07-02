@@ -5,12 +5,14 @@ const app = express();
 const cors = require("cors")
 const helmet = require("helmet")
 const cookieParser = require("cookie-parser")
+const nodemailer = require("nodemailer")
 
 // Requiring routes
 const authentication = require("./routes/authentication/indexAuthentication.route")
 const studentRoutes = require("./routes/student.route")
 const profileRoutes = require("./routes/profile/index.profile")
-const jobRoutes = require("./routes/job.route")
+const jobRoutes = require("./routes/job.route");
+const mailSender = require("./middlewares/helperfunctions/mailSender");
 
 
 // setting cors
@@ -36,6 +38,13 @@ app.use(jobRoutes)
 
 app.get("/",(req,res)=>{
   res.json("doneeee")
+})
+
+app.get("/mails",async (req,res)=>{
+  const mailer = await mailSender();
+  const responseCode = sendmail.response.split(" ")[0]
+  if (responseCode != 250) return "nooo"
+  res.json(mailer)
 })
 
 // Database connection and starting the server
