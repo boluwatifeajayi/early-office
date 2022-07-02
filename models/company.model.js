@@ -1,43 +1,46 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const companySchema = mongoose.Schema({
-    AdminFirstName:{
-        type:String, 
-    },
-
-    AdminLastName:{
-        type:String, 
+const companySchema = mongoose.Schema(
+  {
+    adminFirstName: {
+      type: String,
     },
 
-    orgEmail : {
-        type : String, 
-        required:true,
-        unique:true
+    adminLastName: {
+      type: String,
     },
 
-    orgPassword:{
-        type:String, 
-    },
-    phoneNumber:{
-        type:String, 
-    },
-    orgName:{
-        type:String, 
-    },
-    orgDescription:{
-        type:String, 
-    },
-    orgPresence:{
-        website:{
-            type:String
-        },
-       socialHandles:[Object], 
-       officalDocs:{
-            type:String
-       }
+    orgEmail: {
+      type: String,
+      required: true,
+      unique: true,
     },
 
-},{timestamps : true});
+    orgPassword: {
+      type: String,
+    },
+    phoneNumber: {
+      type: String,
+    },
+    orgName: {
+      type: String,
+      unique: true,
+    },
+    orgDescription: {
+      type: String,
+    },
+    orgPresence: {
+      website: {
+        type: String,
+      },
+      socialHandles: [Object],
+      officalDocs: {
+        type: String,
+      },
+    },
+  },
+  { timestamps: true }
+);
 
 const companyModel = mongoose.model("company", companySchema);
 module.exports = companyModel;

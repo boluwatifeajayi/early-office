@@ -1,32 +1,38 @@
-const nodemailer = require("nodemailer")
+const nodemailer = require("nodemailer");
 
-const mailSender = async() =>{
-    try{
+const mailSender = async (recipients, messageConfig) => {
+  try {
+    // config
+    const transporter = nodemailer.createTransport({
+      port: 465,
+      host: "smtp.gmail.com",
+      auth: {
+        user: `info.earlyoffice@gmail.com`,
+        pass: `bsdgboajogzbgsyr`,
+      },
+    });
 
-        // config
-        const transporter = nodemailer.createTransport({
-          port : 465,
-          host : "smtp.gmail.com",
-          auth : {
-            user : "info.earlyoffice@gmail.co",
-            pass : "bsdgboajogzbgsyr"
-          },
-        })
-        
-        // Sending mail
-        const sendmail = await transporter.sendMail({
-          sender: "info.earlyoffice@gmail.com",
-          to : "isaiahekundayo17@gmail.com",
-          subject: "Test amil",
-          text : "This is a test mail",
-        })
-    
-        return sendmail
-        
-      }catch(error){
-        console.log(error)
-        return error
-      }
-}
+    // recipients = [`isaiahekundayo17@gmail.com`, "chiedozie121@gmail.com"];
+    // messageConfig = {
+    //   title: "Testing 123",
+    //   body: "Check if node mailer can work like this",
+    // };
 
-module.exports = mailSender
+    // Sending mail
+    recipients.map(async (recipient) => {
+      const sendmail = await transporter.sendMail({
+        sender: "info.earlyoffice@gmail.com",
+        to: `${recipient}`,
+        subject: `${messageConfig.title}`,
+        html: `${messageConfig.body}`,
+      });
+    });
+
+    return 250;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+module.exports = mailSender;

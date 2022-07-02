@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 
 const jobSchema = new mongoose.Schema(
   {
-    Role: {
+    role: {
       type: String,
     },
 
@@ -14,15 +14,22 @@ const jobSchema = new mongoose.Schema(
       type: String,
     },
 
-    NumberOfOpenings: {
+    numberOfOpenings: {
       type: Number,
     },
 
-    companyId: {
-      type: String,
+    org: {
+      orgId: {
+        type: String,
+      },
+      orgName: {
+        type: String,
+      },
+      orgEmail: {
+        type: String,
+      },
     },
-
-    SkillsNeeded: {
+    skillsNeeded: {
       type: [String],
     },
 
@@ -39,21 +46,21 @@ const jobSchema = new mongoose.Schema(
     },
 
     location: {
-      state : {
-        type : String
+      state: {
+        type: String,
       },
 
-      country : {
-        type : String,
-        default : "Nigeria"
-      }
+      country: {
+        type: String,
+        default: "Nigeria",
+      },
     },
 
     additionalInformation: {
       type: String,
     },
-    student:[
-      { 
+    student: [
+      {
         studentId: {
           type: String,
         },
@@ -63,8 +70,11 @@ const jobSchema = new mongoose.Schema(
         jobAvailability: {
           type: String,
         },
-      }
-    ]
+        appliedAt: {
+          type: Date,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

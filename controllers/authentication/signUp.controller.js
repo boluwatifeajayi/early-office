@@ -45,8 +45,8 @@ async function studentSignUp(req, res) {
 async function companySignUp(req, res) {
   // destructuring req.body
   const {
-    AdminFirstName,
-    AdminLastName,
+    adminFirstName,
+    adminLastName,
     orgEmail,
     orgPassword,
     phoneNumber,
@@ -57,8 +57,8 @@ async function companySignUp(req, res) {
   const hashedPassword = await hashPassword(orgPassword);
   try {
     const newCompany = await companyModel.create({
-      AdminFirstName,
-      AdminLastName,
+      adminFirstName,
+      adminLastName,
       orgEmail,
       orgPassword: hashedPassword,
       phoneNumber,
@@ -85,7 +85,6 @@ async function companySignUp(req, res) {
     return res.status(400).json({ error: error.message });
   }
 }
-
 
 module.exports = {
   studentSignUp,
