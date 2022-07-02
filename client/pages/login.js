@@ -3,8 +3,51 @@ import styles from '../styles/Home.module.css'
 import InputField from '../components/InputField'
 import ButtonField from '../components/ButtonField'
 import Header from '../components/Header'
+import { useState } from 'react'
+import axios from 'axios'
+import { loadGetInitialProps } from 'next/dist/shared/lib/utils'
+import Router from "next/router";
+import { setcurrentStudentSession } from './Utils/common'
+
 
 export default function Register() {
+
+    const[email, setEmail] = useState('');
+    const[password, setPassword] = useState('');
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    
+
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        // Router.push("/jobListing");
+        setError(null);
+        setLoading(true)
+        axios.post("http://localhost:4070/api/student/signIn", {
+            email: email,
+            password: password
+        } , {withCredentials:true}).then(response => {
+            setLoading(false)
+            setcurrentStudentSession(response.data.authToken, response.data.currentStudent)
+            Router.push("/studentProfile");
+            console.log('response', response)
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.authToken}`
+        }).catch(error => {
+            setLoading(false);
+            if(error.response.status === 400){
+                setError(error.response.data.error)
+            }
+            else if(error.response.status === 401){
+                setError(error.response.data)
+            }
+            else{
+                setError("something went wrong, Please Try again later")
+            }
+            console.error('error >>> ', error);
+        });
+    }
   return (
     <div>
       <Head>
@@ -32,11 +75,16 @@ export default function Register() {
                     <p className='text-center pt-2'>Or</p>
                     
 
-                    <InputField type="text" placeholder="Email Address Or Phone Number"/>
+                    <input className='custom-input' placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} />
                     
-                    <InputField type="password" placeholder="Password"/> 
+                    <input className='custom-input' placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
 
-                    <ButtonField buttonText="Login" buttonClass="bt-background"/>
+                    <ButtonField buttonText={loading ? "Loading...": "Login"} buttonClass="bt-background" disabled={loading}
+                    onClick={handleLogin}
+                    />
+                    {/* <input className='custom-input' value={loading ? "Loading...": "Login"} type="submit" onl /> */}
+
+                    {error && <div className='mt-2 text-danger'>{error}</div>}
 
                     <p className='mt-3 text-center color'>Don't Have An Account Yet ?</p>
                          
@@ -50,3 +98,5 @@ export default function Register() {
     </div>
   )
 }
+
+

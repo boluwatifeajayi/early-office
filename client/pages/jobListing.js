@@ -1,12 +1,43 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import InputField from '../components/InputField'
-import ButtonField from '../components/ButtonField'
 import SearchField from '../components/SearchField'
 import Header from '../components/Header'
 import JobCard from '../components/JobCard'
+import { useCookies } from 'react-cookie';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router'
+// import Router from "next/router";
+
 
 export default function StudentProfile() {
+
+  const [cookies, setCookie] = useCookies();
+  const router = useRouter()
+  
+  
+  
+
+  
+    // function redirect(){
+    //   Router.push("/login");
+    // }
+
+    const isauth = () => {
+      if(!cookies.authToken){
+        router.push('/login')
+      }
+      else{
+        router.push('/jobListing')
+      }
+    }
+      
+    // This function will called only once
+    useEffect(() => {
+      isauth();
+    }, [])
+
+  
+
+
   return (
     <div>
       <Head>
@@ -20,9 +51,11 @@ export default function StudentProfile() {
       </Head>
       
       <Header/>
+      
       <div className='listing-container'>
         <SearchField/>
         <div className='row mt-3'>
+        
         <JobCard 
             jobTitle="Frontend Developer(React)"
             company="Blackcopper Limited"

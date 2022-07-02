@@ -7,7 +7,7 @@ export default function ButtonField(props) {
     <div>
       
       
-      <button className={props.buttonClass}>
+      <button className={props.buttonClass} disabled={props.disabled} onClick={props.onClick}>
         {props.buttonText}
       </button>
 

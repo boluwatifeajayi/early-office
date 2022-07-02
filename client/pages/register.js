@@ -1,11 +1,52 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import InputField from '../components/InputField'
 import ButtonField from '../components/ButtonField'
 import Link from 'next/link'
 import Header from '../components/Header'
+import { useState } from 'react'
+
+import axios from 'axios'
+import { setcurrentStudentSession, getauthToken } from './Utils/common'
+import Router from "next/router";
+// import { useRouter } from 'next/router'
 
 export default function Register() {
+    const [firstname, setfirstname] = useState('');
+    const [lastname, setlastname] = useState('');
+    const [phoneNumber, setphoneNumber] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    
+    const submit = async (e) => {
+        e.preventDefault();
+        
+        setError(null);
+        setLoading(true)
+        axios.post("http://localhost:4070/api/student/signUp", {
+            email: email,
+            password: password,
+            firstname: firstname,
+            lastname: lastname,
+            phoneNumber: phoneNumber
+
+        }, {withCredentials:true}).then(response => {
+            setLoading(false)
+            setcurrentStudentSession(response.data.authToken, response.data.currentStudent)
+            Router.push("/login");
+            console.log('response', response)
+        }).catch(error => {
+            setLoading(false);
+            if(error.code === "ERR_BAD_REQUEST"){
+                setError(error.response.data.error)
+            }
+            
+            else{
+                setError("something went wrong, Please Try again later")
+            }
+            console.error('error >>> ', error);
+        });
+    }
   return (
     <div>
       <Head>
@@ -33,26 +74,26 @@ export default function Register() {
                 </ul>
             </div>
             <div className='col-lg'>
-                <form className='register-form'>
+                <form onSubmit={submit} className='register-form'>
                     <h5 className='text-center mb-3 fw-bold'>Create An Account</h5>
 
                     <ButtonField buttonText="Register With Google" buttonClass="bt-outline"/>
                     <p className='text-center pt-2'>Or</p>
                     <div className='row'>
                         <div className='col-md'>
-                        <InputField type="text" placeholder="First Name"/>
+                        <input className='custom-input' placeholder="First Name" type="text" value={firstname} onChange={e => setfirstname(e.target.value)} />
                         </div>
                         <div className='col-md'>
-                        <InputField type="text" placeholder="Last Name"/> 
+                        <input className='custom-input' placeholder="Lastt Name" type="text" value={lastname} onChange={e => setlastname(e.target.value)} />
                         </div>
                     </div>
 
-                    <InputField type="email" placeholder="Email Address"/>
-                    <InputField type="number" placeholder="Phone Number"/>
-                    <InputField type="password" placeholder="Password"/> 
+                    <input className='custom-input' placeholder="Email" type="text" value={email} onChange={e => setEmail(e.target.value)} />
+                    <input className='custom-input' placeholder="Phone Number" type="number" value={phoneNumber} onChange={e => setphoneNumber(e.target.value)} />
+                    <input className='custom-input' placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
+                    {error && <div className='mt-2 text-danger'>{error}</div>}
 
-                    
-                    <ButtonField buttonText="Register" buttonClass="bt-background"/>
+                    <ButtonField buttonText={loading ? "Loading...": "Register"} buttonClass="bt-background"/>
                     
                     <Link href="/login">
                     <p className='color mt-3 mb-2'>Already Have An Account ?</p>
@@ -67,3 +108,6 @@ export default function Register() {
     </div>
   )
 }
+
+
+

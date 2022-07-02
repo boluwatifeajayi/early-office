@@ -2,8 +2,51 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import InputField from '../components/InputField'
 import ButtonField from '../components/ButtonField'
+import { useState } from 'react'
+import {useRouter} from "next/router";
+import axios from 'axios'
+import { setcurrentStudentSession, getauthToken } from './Utils/common'
+import Router from "next/router";
+
 
 export default function StudentProfile() {
+
+  const [currentLocation, setcurrentLocation] = useState('');
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+
+  
+  
+  const submit = async (e) => {
+    e.preventDefault();
+    
+    setError(null);
+    setLoading(true)
+    
+    axios.post("http://localhost:4070/api/student/profile/update", {
+        currentLocation: currentLocation
+    } , { withCredentials: true,
+      
+     
+    }).then(response => {
+        setLoading(false)
+        setcurrentStudentSession(response.data.authToken, response.data.currentStudent)
+        Router.push("/jobListing");
+        console.log('response', response)
+    }).catch(error => {
+        setLoading(false);
+        if(error.code === "ERR_BAD_REQUEST"){
+            setError(error.response.data.error)
+        }
+        
+        else{
+            setError("something went wrong, Please Try again later")
+        }
+        console.error('error >>> ', error);
+    });
+}
+
   return (
     <div>
       <Head>
@@ -18,7 +61,7 @@ export default function StudentProfile() {
       
       <div className='profile-container'>
         <h1 className='mb-4'>Set Up Your Profile</h1>
-        <form>
+        <form onSubmit={submit}>
         <div className='row'>
           <div className='col-md profile-box'>
           <h5 className='mb-3 fw-bold text-center'>Personal Details</h5>
@@ -30,6 +73,8 @@ export default function StudentProfile() {
                 <InputField type="text" placeholder="Location"/> 
                 </div>
             </div>
+
+            <input className='custom-input' placeholder="First Name" type="text" value={currentLocation} onChange={e => setcurrentLocation(e.target.value)} />
 
             <InputField type="text" placeholder="Status (eg. Undergraduate, New Grad...)"/>
             <p className='text-secondary'>Upload CV</p>
@@ -89,6 +134,7 @@ export default function StudentProfile() {
           </div>
         </div>
         <div className='container-btn'>
+        {error && <div className='mt-2 text-danger'>{error}</div>}
         <ButtonField buttonText="Submit" buttonClass="bt-background width"/>
         </div>
         
