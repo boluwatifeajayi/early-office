@@ -1,5 +1,6 @@
 const jobModel = require("../models/job.model");
 const companyModel = require("../models/company.model");
+const studentModel = require("../models/student.model");
 const mailSender = require("../middlewares/helperfunctions/mailSender");
 const {
   createJobBody,
@@ -120,9 +121,7 @@ const applyToJob = async (req, res) => {
   try {
     const { studentId } = res.locals.decodedToken;
     if (studentId == null)
-      return res
-        .status(400)
-        .json({ error: "Ensure you are a student to access this route" });
+      return res.status(400).json({ error: "Ensure you are a student to access this route" });
     const { reasonToBeHired, jobAvailability } = req.body;
     const { jobid } = req.params;
     const appliedAt = Date.now();
@@ -136,10 +135,10 @@ const applyToJob = async (req, res) => {
       { new: true }
     );
 
-    // await mailSender(...orgName, {
-    //   title: createJobTitle(newJob),
-    //   body: createJobBody(newJob),
-    // });
+    await mailSender(...orgName, {
+      title: createJobTitle(newJob),
+      body: createJobBody(newJob),
+    });
     res.status(201).json(newJobApplication);
   } catch (error) {
     res.status(400).json({ error: error.message });

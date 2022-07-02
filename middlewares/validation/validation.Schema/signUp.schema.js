@@ -22,7 +22,7 @@ const companySignUpSchema = joi.object().keys({
   orgPassword: joi.string().required().label("Company password"),
   phoneNumber: joi.string().required().label("Company phone number"),
   orgName: joi.string().required().label("Company name"),
-  orgDescription: joi.string().required().label("Company description"),
+  orgDescription: joi.string().label("Company description"),
 });
 
 module.exports = {
