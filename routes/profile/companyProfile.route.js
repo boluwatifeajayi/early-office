@@ -5,11 +5,11 @@ const { protectedRoutes } = require("../../middlewares/authentication/protectedR
 var route = express.Router();
 
 // Update Company profile 
-route.post("/api/Company/profile/update",protectedRoutes, updateCompanyProfile)
+route.post("/api/company/profile/update",protectedRoutes, updateCompanyProfile)
 
 // Change Company password
 // route.post("/api/Company/change/password",protectedRoutes,changeStudentPassword)
-route.post("/api/Company/profile/update/password",protectedRoutes,changeStudentPassword)
+route.post("/api/company/profile/update/password",protectedRoutes,changeStudentPassword)
 
 
 module.exports = route;
