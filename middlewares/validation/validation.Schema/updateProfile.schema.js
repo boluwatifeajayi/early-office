@@ -45,4 +45,13 @@ const updateStudentProfileSchema = joi.object().keys({
   status: joi.string().label("Student status"),
 });
 
-module.exports = { updateStudentProfileSchema };
+updateCompanyProfileSchema = joi.object().keys({
+  orgDescription: joi.string().required(), 
+  orgPresence:joi.object().keys({
+    website: joi.string,
+    socialHandles: joi.object(),
+    officalDocs: joi.string()
+  })
+})
+
+module.exports = { updateStudentProfileSchema , updateCompanyProfileSchema};

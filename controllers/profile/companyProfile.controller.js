@@ -7,8 +7,8 @@ async function updateCompanyProfile (req,res){
             adminFirstName,
             adminLastName,
             orgDescription,
-            orgPresence
-        } = req.body;
+            orgPresence,
+            } = req.body;
 
         const updatedCompanyProfile = await companyModel.findOneAndUpdate({_id : companyId},
             {
