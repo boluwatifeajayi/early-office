@@ -2,18 +2,18 @@ const companyModel = require("../../models/company.model");
 
 async function updateCompanyProfile (req,res){
     try{
-        const {id} = res.locals.decodedToken;
+        const {companyId} = res.locals.decodedToken;
         const {
-            AdminFirstName,
-            AdminLastName,
+            adminFirstName,
+            adminLastName,
             orgDescription,
             orgPresence
         } = req.body;
 
-        const updatedCompanyProfile = await companyModel.findOneAndUpdate({_id : id},
+        const updatedCompanyProfile = await companyModel.findOneAndUpdate({_id : companyId},
             {
-                AdminFirstName,
-                AdminLastName,
+                adminFirstName,
+                adminLastName,
                 orgDescription,
                 orgPresence,
             },{
@@ -28,10 +28,10 @@ async function updateCompanyProfile (req,res){
 
 async function changeCompanyPassword (req,res){
     try {
-        const { id } = res.locals.decodedToken
+        const { companyId } = res.locals.decodedToken
         const {orgPassword} = req.body
 
-        const updatedCompanyProfile = await companyModel.findByIdAndUpdate(id, 
+        const updatedCompanyProfile = await companyModel.findBycompanyIdAndUpdate(id, 
         {orgPassword},
         { new : true })
         return res.status(200).json(updatedCompanyProfile)
