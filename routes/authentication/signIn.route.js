@@ -1,6 +1,8 @@
 const express = require("express");
-const studentSignIn = require("../../controllers/authentication/signIn.controller").studentSignIn;
-const companySignIn = require("../../controllers/authentication/signIn.controller").companySignIn;
+const {
+  studentSignIn,
+  companySignIn,
+} = require("../../controllers/authentication/signIn.controller");
 var route = express.Router();
 
 // Student signin route
