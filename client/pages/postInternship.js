@@ -3,8 +3,89 @@ import styles from '../styles/Home.module.css'
 import InputField from '../components/InputField'
 import ButtonField from '../components/ButtonField'
 import Header from '../components/Header'
+import { useState } from 'react'
+import axios from 'axios'
+import {setcurrentStudentSession} from './Utils/common'
+import { useCookies } from 'react-cookie';
+import { useEffect } from 'react';
+import { useRouter} from 'next/router'
 
 export default function StudentProfile() {
+ 
+  const [jobName, setjobName] = useState('');
+  const [role, setrole] = useState('');
+  const [benefits, setbenefits] = useState('');
+  const [jobResponsibility, setjobResponsibility] = useState('');
+  const [jobType, setjobType] = useState('');
+  const [skillsNeeded, setskillsNeeded] = useState('');
+  const [numberOfOpenings, setnumberOfOpenings] = useState('');
+  const [salary, setsalary] = useState('');
+  const [duration, setduration] = useState('');
+  // const [location, setlocation] = useState('');
+  const [country, setcountry] = useState('');
+  const [state, setstate] = useState('');
+  const [additionalInformation, setadditionalInformation] = useState('');
+ 
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [cookies, setCookie] = useCookies();
+  const router = useRouter()
+
+
+  const isauth = () => {
+    if(!cookies.authToken){
+      router.push('/companylogin')
+    }
+    else{
+      console.log("you are welcome")
+    }
+  }
+    
+
+  useEffect(() => {
+    isauth();
+  }, [])
+
+
+  const submit = async (e) => {
+    e.preventDefault();
+    
+    setError(null);
+    setLoading(true)
+    
+    axios.post("http://localhost:4070/api/company/job/create", {
+        jobName,
+        role,
+        jobResponsibility,
+        jobType,
+        skillsNeeded: [skillsNeeded],
+        numberOfOpenings,
+        salary,
+        duration,
+        benefits,
+        location: {country: "Nigeria", state},
+        additionalInformation,
+    } , { withCredentials: true, 
+    }).then(response => {
+        setLoading(false)
+        router.push("/jobListing");
+        setcurrentStudentSession(response.data.authToken, response.data.currentCompany)
+        console.log('response', response)
+    }).catch(error => {
+        setLoading(false);
+        if(error.code === "ERR_BAD_REQUEST"){
+            setError(error.response.data.error)
+        }
+        
+        else{
+            setError("something went wrong, Please Try again later")
+        }
+        console.error('error >>> ', error);
+    });
+}
+
+  
   return (
     <div>
       <Head>
@@ -19,38 +100,42 @@ export default function StudentProfile() {
       <Header/>
       <div className='profile-container'>
         <h1 className='mb-4'>Post An Internship</h1>
-        <form>
+        <form onSubmit={submit}>
         <div className='row'>
           <div className='col-md profile-box'>
-          <InputField type="text" placeholder="Profile"/>
-          <InputField type="text" placeholder="Job Title"/>
+          <input className='custom-input' placeholder="Profile" type="text" value={role} onChange={e => setrole(e.target.value)} />
+          <input className='custom-input' placeholder="Job Title" type="text" value={jobName} onChange={e => setjobName(e.target.value)} />
             <div className='row'>
                 <div className='col-md'>
-                <InputField type="text" placeholder="Job Type"/>
+                <input className='custom-input' placeholder="Job Type" type="text" value={jobType} onChange={e => setjobType(e.target.value)} />
                 </div>
                 <div className='col-md'>
-                <InputField type="text" placeholder="Salary"/> 
+                <input className='custom-input' placeholder="salary" type="text" value={salary} onChange={e => setsalary(e.target.value)} />
                 </div>
             </div>
-
-            <InputField type="text" placeholder="Duration"/>
-            <InputField type="text" placeholder="Number Of Openings"/>
-            <InputField type="text" placeholder="Location"/>
+          
+            <input className='custom-input' placeholder="internship duration" type="text" value={duration} onChange={e => setduration(e.target.value)} />
+            <input className='custom-input' placeholder="number Of Openings" type="text" value={numberOfOpenings} onChange={e => setnumberOfOpenings(e.target.value)} />
+            <input className='custom-input' placeholder="Location" type="text" value={state} onChange={e => setstate(e.target.value)} />
           </div>
           <div className='col-md profile-box'>
           <h5 className='mb-3 fw-bold text-center'>Interns Responsibilities</h5>
-          <textarea className="form-control mb-4" id="exampleFormControlTextarea1" rows="15" placeholder='
+          <textarea className="form-control mb-4" id="exampleFormControlTextarea1" rows="11" placeholder='
             1. Day To day tasks performed By The Intern
             2. Enter duties....
-          '></textarea>
+          ' onChange={e => setjobResponsibility(e.target.value)}>{jobResponsibility}</textarea>
+          <textarea className="form-control mb-4" id="exampleFormControlTextarea1" rows="6" placeholder='
+           Benefits From The Job
+          ' onChange={e => setbenefits(e.target.value)}>{benefits}</textarea>
           </div>
           <div className='col-md profile-box'>
           <textarea className="form-control mb-4" id="exampleFormControlTextarea1" rows="4" placeholder='
            Enter Skills Required
-          '></textarea>
+          ' onChange={e => setskillsNeeded(e.target.value)}>{skillsNeeded}</textarea>
+
           <textarea className="form-control mb-4" id="exampleFormControlTextarea1" rows="7" placeholder='
            Additional Information(optional)
-          '></textarea>
+          ' onChange={e => setadditionalInformation(e.target.value)}>{additionalInformation}</textarea>
             
             
 

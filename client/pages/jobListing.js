@@ -2,41 +2,29 @@ import Head from 'next/head'
 import SearchField from '../components/SearchField'
 import Header from '../components/Header'
 import JobCard from '../components/JobCard'
-import { useCookies } from 'react-cookie';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router'
 // import Router from "next/router";
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import moment from 'moment'
+
+
+const client = axios.create({
+  baseURL: "http://localhost:4070/api/jobs" 
+});
+
 
 
 export default function StudentProfile() {
 
-  const [cookies, setCookie] = useCookies();
-  const router = useRouter()
-  
-  
-  
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    client.get().then((response) => {
+       setJobs(response.data);
+    });
+ }, []);
 
   
-    // function redirect(){
-    //   Router.push("/login");
-    // }
-
-    const isauth = () => {
-      if(!cookies.authToken){
-        router.push('/login')
-      }
-      else{
-        router.push('/jobListing')
-      }
-    }
-      
-    // This function will called only once
-    useEffect(() => {
-      isauth();
-    }, [])
-
-  
-
 
   return (
     <div>
@@ -55,18 +43,21 @@ export default function StudentProfile() {
       <div className='listing-container'>
         <SearchField/>
         <div className='row mt-3'>
-        
-        <JobCard 
-            jobTitle="Frontend Developer(React)"
-            company="Blackcopper Limited"
-            location="Lagos"
-            jobtype="Internship"
-            salary="30,000"
-            duration="3 months"
-            deadline="july 3rd"
-           
-        />
-        <JobCard 
+        {jobs.map((job) => {
+        return (
+          <JobCard 
+            jobTitle={job.jobName}
+            company={job.org.orgName}
+            location={job.location.state}
+            jobtype={job.jobType}
+            salary={job.salary}
+            duration={job.duration}
+            deadline={moment(job.createdAt, "YYYYMMDD=").fromNow()} 
+            link={'/internships/'+job._id}
+          />
+       );
+    })}
+        {/* <JobCard 
             jobTitle="Marketer"
             company="Blackcopper Limited"
             location="Lagos"
@@ -95,7 +86,7 @@ export default function StudentProfile() {
             duration="3 months"
             deadline="july 3rd"
           
-        />
+        /> */}
         </div>
         
       

@@ -1,11 +1,52 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import InputField from '../components/InputField'
 import ButtonField from '../components/ButtonField'
 import Link from 'next/link'
 import Header from '../components/Header'
+import { useState } from 'react'
+import axios from 'axios'
+import { setcurrentStudentSession, getauthToken } from './Utils/common'
+import Router from "next/router";
 
 export default function Register() {
+    const [adminFirstName, setadminFirstName] = useState('');
+    const [adminLastName, setadminLastName] = useState('');
+    const [orgEmail, setOrgEmail] = useState('');
+    const [phoneNumber, setphoneNumber] = useState('');
+    const [orgPassword, setOrgPassword] = useState('');
+    const [orgName, setOrgName] = useState('')
+    // const [orgDescription, setOrgDescription] = useState('');
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    
+    const submit = async (e) => {
+        e.preventDefault();
+        
+        setError(null);
+        setLoading(true)
+        axios.post("http://localhost:4070/api/company/signUp", {
+            adminFirstName,
+            adminLastName,
+            orgEmail,
+            phoneNumber,
+            orgPassword,
+            orgName
+        }, {withCredentials:true}).then(response => {
+            setLoading(false)
+            setcurrentStudentSession(response.data.authToken, response.data.currentCompany)
+            Router.push("/companylogin");
+            console.log('response', response)
+        }).catch(error => {
+            setLoading(false);
+            if(error.code === "ERR_BAD_REQUEST"){
+                setError(error.response.data.error)
+            }
+            
+            else{
+                setError("something went wrong, Please Try again later")
+            }
+            console.error('error >>> ', error);
+        });
+    }
   return (
     <div>
       <Head>
@@ -32,26 +73,31 @@ export default function Register() {
                 </ul>
             </div>
             <div className='col-lg'>
-                <form className='register-form'>
+            <form onSubmit={submit} className='register-form'>
                     <h5 className='text-center mb-3 fw-bold'>Create An Account</h5>
 
+                    <ButtonField buttonText="Register With Google" buttonClass="bt-outline"/>
+                    <p className='text-center pt-2'>Or</p>
                     <div className='row'>
                         <div className='col-md'>
-                        <InputField type="text" placeholder="First Name"/>
+                        <input className='custom-input' placeholder="First Name" type="text" value={adminFirstName} onChange={e => setadminFirstName(e.target.value)} />
                         </div>
                         <div className='col-md'>
-                        <InputField type="text" placeholder="Last Name"/> 
+                        <input className='custom-input' placeholder="Last Name" type="text" value={adminLastName} onChange={e => setadminLastName(e.target.value)} />
                         </div>
                     </div>
-                    <InputField type="text" placeholder="Organisation Name"/>
-                    <InputField type="email" placeholder="Offical Email Address"/>
-                    <InputField type="number" placeholder="Phone Number"/>
-                    <InputField type="password" placeholder="Password"/> 
 
+                    <input className='custom-input' placeholder="Organization Name" type="text" value={orgName} onChange={e => setOrgName(e.target.value)} />
+
+                    <input className='custom-input' placeholder="Organization Email" type="email" value={orgEmail} onChange={e => setOrgEmail(e.target.value)} />
                     
-                    <ButtonField buttonText="Register" buttonClass="bt-background"/>
+                    <input className='custom-input' placeholder="Phone Number" type="number" value={phoneNumber} onChange={e => setphoneNumber(e.target.value)} />
+                    <input className='custom-input' placeholder="Password" type="password" value={orgPassword} onChange={e => setOrgPassword(e.target.value)} />
+                    {error && <div className='mt-2 text-danger'>{error}</div>}
+
+                    <ButtonField buttonText={loading ? "Loading...": "Register"} buttonClass="bt-background"/>
                     
-                    <Link href="/login">
+                    <Link href="/companylogin">
                     <p className='color mt-3 mb-2'>Already Have An Account ?</p>
                     </Link>
                       

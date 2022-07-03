@@ -5,8 +5,17 @@ import ButtonField from '../components/ButtonField'
 import Header from '../components/Header'
 import JobCard from '../components/JobCard'
 import PostingCard from '../components/PostingCard'
+import Router from "next/router";
+import Link from 'next/link'
+import {  removecurrentStudentSession, setcurrentStudentSession, getcurrentcompany } from '../pages/Utils/common2'
+import { useEffect, useState } from "react";
 
 export default function CompanyDashboard() {
+
+  const currentCompany = getcurrentcompany()
+
+
+
   return (
     <div>
       <Head>
@@ -24,10 +33,15 @@ export default function CompanyDashboard() {
       <div className='container'>
         <div className='row mt-4 mb-4'>
             <div className='col-lg-8'>
-            <h3 className='fw-bold'>Internships</h3>
+            <h6 className='fw-bold'>welcome  {currentCompany.adminFirstName}</h6>
+            <h3 className='text-secondary'>Internships</h3>
+           
             </div>
             <div className='col-lg-4'>
-                <ButtonField buttonText="Post New internship" buttonClass="bt-background"/>
+              <Link href="/postInternship">
+              <ButtonField buttonText="Post New internship" buttonClass="bt-background"/>
+              </Link>
+               
             </div>
         </div>
         

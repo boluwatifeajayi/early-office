@@ -3,8 +3,69 @@ import styles from '../styles/Home.module.css'
 import InputField from '../components/InputField'
 import ButtonField from '../components/ButtonField'
 import Header from '../components/Header'
+import { useState } from 'react'
+import axios from 'axios'
+import {setcurrentStudentSession} from './Utils/common'
+import { useCookies } from 'react-cookie';
+import { useEffect } from 'react';
+import { useRouter} from 'next/router'
 
 export default function StudentProfile() {
+  const [orgDescription, setorgDescription] = useState('');
+  const [website, setwebsite] = useState('');
+  const [socialHandles, setsocialHandles] = useState('');
+  
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [cookies, setCookie] = useCookies();
+  const router = useRouter()
+
+
+  const isauth = () => {
+    if(!cookies.authToken){
+      router.push('/login')
+    }
+    else{
+      console.log("you are welcome")
+    }
+  }
+    
+
+  useEffect(() => {
+    isauth();
+  }, [])
+
+
+  const submit = async (e) => {
+    e.preventDefault();
+    
+    setError(null);
+    setLoading(true)
+    
+    axios.post("http://localhost:4070/api/company/profile/update", {
+        orgDescription: orgDescription,
+        orgPresence: {website:website, socialHandles:{socialHandles}, },
+    } , { withCredentials: true, 
+    }).then(response => {
+        setLoading(false)
+        router.push("/companyDashboard");
+        // setcurrentStudentSession(response.data.authToken, response.data.currentCompany)
+        console.log('response', response)
+    }).catch(error => {
+        setLoading(false);
+        if(error.code === "ERR_BAD_REQUEST"){
+            setError(error.response.data.error)
+        }
+        
+        else{
+            setError("something went wrong, Please Try again later")
+        }
+        console.error('error >>> ', error);
+    });
+}
+
+  
   return (
     <div>
       <Head>
@@ -21,23 +82,20 @@ export default function StudentProfile() {
         <center>
         <h1 className='mb-4'>Complete Your Profile</h1>
         </center>
-        <form>
+        <form onSubmit={submit}>
         <div className='row'>
           <div className='company-profile'>
-          <textarea className="form-control mb-4" id="exampleFormControlTextarea1" rows="3" placeholder='Description Of Your Organisation'></textarea>
-          <InputField type="text" placeholder="company website(optional)"/>
+          <textarea className="form-control mb-4" id="exampleFormControlTextarea1" rows="3" placeholder='Description Of Your Organisation' onChange={e => setorgDescription(e.target.value)}>{orgDescription}</textarea>
+          <input className='custom-input' placeholder="organization website" type="text" value={website} onChange={e => setwebsite(e.target.value)} />
             
-
            <b>Company Online Presence</b> 
-           <InputField type="text" placeholder="social media link(eg facebook, instagram, linked in)"/>
-           <InputField type="text" placeholder="social Profile 2(optional)"/>
-
-            
-            
+           <input className='custom-input' placeholder="Social Link(facebook, instagram, etc)" type="text" value={socialHandles} onChange={e => setsocialHandles(e.target.value)} />
+           
           </div>
           
         </div>
         <div className='container-btn'>
+        {error && <div className='mt-2 text-danger'>{error}</div>}
         <ButtonField buttonText="Submit" buttonClass="bt-background width"/>
         </div>
         

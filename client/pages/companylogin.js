@@ -3,8 +3,51 @@ import styles from '../styles/Home.module.css'
 import InputField from '../components/InputField'
 import ButtonField from '../components/ButtonField'
 import Header from '../components/Header'
+import { useState } from 'react'
+import axios from 'axios'
+import { loadGetInitialProps } from 'next/dist/shared/lib/utils'
+import Router from "next/router";
+import { setcurrentcompanySession } from './Utils/common2'
+
 
 export default function Register() {
+
+    const[orgEmail, setorgEmail] = useState('');
+    const[orgPassword, setorgPassword] = useState('');
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    
+
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        // Router.push("/jobListing");
+        setError(null);
+        setLoading(true)
+        axios.post("http://localhost:4070/api/company/signIn", {
+            orgEmail: orgEmail,
+            orgPassword: orgPassword
+        } , {withCredentials:true}).then(response => {
+            setLoading(false)
+            setcurrentcompanySession(response.data.authToken, response.data.currentCompany)
+            Router.push("/companyProfile");
+            console.log('response', response)
+            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.authToken}`
+        }).catch(error => {
+            setLoading(false);
+            if(error.response.status === 400){
+                setError(error.response.data.error)
+            }
+            else if(error.response.status === 401){
+                setError(error.response.data)
+            }
+            else{
+                setError("something went wrong, Please Try again later")
+            }
+            console.error('error >>> ', error);
+        });
+    }
   return (
     <div>
       <Head>
@@ -17,20 +60,31 @@ export default function Register() {
         />
       </Head>
       <Header/>
-      <div className='container'>
+      <div className='register-container'>
         <div className='row'>
-            <div className='col-lg down'>
-                <h1 className='main-register-header'>Welcome <br/>Back</h1>
-                <p>Login to your account to continue</p>
+            <div className='col-lg pl-4 log-bg'>
+                <h1 className='main-register-header inner'>Welcome <br/>Back Boss</h1>
+                <p className='text-white inner'>Please Login to your account to continue</p>
+            
             </div>
             <div className='col-lg'>
-                <form className='register-form'>
+                <form className='register-form inner'>
                     <h4 className='text-center mt-4 mb-3 fw-bold'>Login To Your Account</h4>
-                    <InputField type="text" placeholder="Email Address Or Phone Number"/>
-                    
-                    <InputField type="password" placeholder="Password"/> 
 
-                    <ButtonField buttonText="Login" buttonClass="bt-background"/>
+                    <ButtonField buttonText="Login With Google" buttonClass="bt-outline"/>
+                    <p className='text-center pt-2'>Or</p>
+                    
+
+                    <input className='custom-input' placeholder="organisation Email" type="email" value={orgEmail} onChange={e => setorgEmail(e.target.value)} />
+                    
+                    <input className='custom-input' placeholder="Password" type="password" value={orgPassword} onChange={e => setorgPassword(e.target.value)} />
+
+                    <ButtonField buttonText={loading ? "Loading...": "Login"} buttonClass="bt-background" disabled={loading}
+                    onClick={handleLogin}
+                    />
+                    {/* <input className='custom-input' value={loading ? "Loading...": "Login"} type="submit" onl /> */}
+
+                    {error && <div className='mt-2 text-danger'>Incorrect orgEmail or orgPassword</div>}
 
                     <p className='mt-3 text-center color'>Don't Have An Account Yet ?</p>
                          
@@ -44,3 +98,5 @@ export default function Register() {
     </div>
   )
 }
+
+

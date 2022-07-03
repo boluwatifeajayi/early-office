@@ -31,7 +31,7 @@ export default function Register() {
         } , {withCredentials:true}).then(response => {
             setLoading(false)
             setcurrentStudentSession(response.data.authToken, response.data.currentStudent)
-            Router.push("/studentProfile");
+            Router.push("/jobListing");
             console.log('response', response)
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.authToken}`
         }).catch(error => {
@@ -84,7 +84,7 @@ export default function Register() {
                     />
                     {/* <input className='custom-input' value={loading ? "Loading...": "Login"} type="submit" onl /> */}
 
-                    {error && <div className='mt-2 text-danger'>{error}</div>}
+                    {error && <div className='mt-2 text-danger'>Incorrect email or password</div>}
 
                     <p className='mt-3 text-center color'>Don't Have An Account Yet ?</p>
                          

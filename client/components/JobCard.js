@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import ButtonField from './ButtonField'
+import Link from 'next/link'
 
 export default function JobCard(props) {
   return (
@@ -24,11 +25,14 @@ export default function JobCard(props) {
             <p>{props.duration}</p>
         </div>
         <div className='col-md'>
-            <b className='text-secondary'>Apply By</b>
+            <b className='text-secondary'>Posted</b>
             <p>{props.deadline}</p>
         </div>
     </div>
-    <ButtonField buttonText="More Details" buttonClass="short-btn"/>
+    <Link href={props.link}>
+       <ButtonField buttonText="More Details" buttonClass="short-btn"/>
+    </Link>
+    
   </div>
 </div>
 

@@ -1,0 +1,108 @@
+
+.internships {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    border: 1px solid #E4E5E7;
+    /* height: 400px; */
+}
+
+.inWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 1200px;
+    /* height: 100%; */
+}
+
+.inRow1 {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+.inRow2 {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.inApply {
+    font-size: 18px;
+}
+
+.inView {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4598E7;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.inView:hover {
+    color: #2584de;
+}
+
+.inViewAr {
+    margin-top: 3px;
+}
+
+.inRow3 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.row3Title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.row3Cards {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    padding-top: 20px;
+    width: 130px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-right: 2px;
+}
+
+.card:hover {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    color: #4598E7;
+}
+
+.cardText {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: 500;
+
+}
+
+.gs {
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.gh {
+    margin-bottom: 10px;
+}

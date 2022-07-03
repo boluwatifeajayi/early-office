@@ -3,17 +3,58 @@ import styles from '../styles/Home.module.css'
 import InputField from '../components/InputField'
 import ButtonField from '../components/ButtonField'
 import { useState } from 'react'
-import {useRouter} from "next/router";
+
 import axios from 'axios'
-import { setcurrentStudentSession, getauthToken } from './Utils/common'
-import Router from "next/router";
+import {setcurrentStudentSession} from './Utils/common'
+
+import Header from '../components/Header'
+import { useCookies } from 'react-cookie';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router'
 
 
 export default function StudentProfile() {
-
+  
   const [currentLocation, setcurrentLocation] = useState('');
+  const [preferredLanguage, setpreferredLanguage] = useState('');
+  const [status, setstatus] = useState('');
+  const [fieldOfInterest, setfieldOfInterest] = useState('');
+  const [graduationStatus, setgraduationStatus] = useState('');
+  const [schoolName, setschoolName] = useState('');
+  const [startYear, setstartYear] = useState('');
+  const [degree, setdegree] = useState('');
+  const [gpa, setgpa] = useState('');
+  const [company, setcompany] = useState('');
+  const [jobTitle, setjobTitle] = useState('');
+  const [issuerName, setissuerName] = useState('');
+  const [issuingOrg, setissuingOrg] = useState('');
+  const [skills, setskills] = useState('');
+  const [sampleLink, setsampleLink] = useState('');
+  const [coverLetter, setcoverLetter] = useState('');
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const [cookies, setCookie] = useCookies();
+  const router = useRouter()
+  
+  
+  
+    const isauth = () => {
+      if(!cookies.authToken){
+        router.push('/login')
+      }
+      else{
+        console.log("you are welcome")
+      }
+    }
+      
+  
+    useEffect(() => {
+      isauth();
+    }, [])
+
+  
+
 
 
   
@@ -25,7 +66,14 @@ export default function StudentProfile() {
     setLoading(true)
     
     axios.post("http://localhost:4070/api/student/profile/update", {
-        currentLocation: currentLocation
+        currentLocation: currentLocation,
+        preferredLanguage: preferredLanguage,
+        status: status,
+        fieldOfInterest: fieldOfInterest,
+        graduation: [{schoolName, startYear, degree, gpa}],
+        workExperience: [{company, jobTitle, certifications: [{issuerName, issuingOrg}]}],
+        skills: [skills],
+        workSamples: [{coverLetter, sampleLink}]
     } , { withCredentials: true,
       
      
@@ -58,48 +106,48 @@ export default function StudentProfile() {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         />
       </Head>
+      <Header/>
       
       <div className='profile-container'>
-        <h1 className='mb-4'>Set Up Your Profile</h1>
+        <h1 className='mb-4'>Let's Complete Your Profile And Get You Hired</h1>
         <form onSubmit={submit}>
         <div className='row'>
           <div className='col-md profile-box'>
           <h5 className='mb-3 fw-bold text-center'>Personal Details</h5>
             <div className='row'>
                 <div className='col-md'>
-                <InputField type="text" placeholder="Gender"/>
+                <input className='custom-input' placeholder="Gender" type="text" value={preferredLanguage} onChange={e => setpreferredLanguage(e.target.value)} />
                 </div>
                 <div className='col-md'>
-                <InputField type="text" placeholder="Location"/> 
+                <input className='custom-input' placeholder="Current Location" type="text" value={currentLocation} onChange={e => setcurrentLocation(e.target.value)} />
                 </div>
             </div>
 
-            <input className='custom-input' placeholder="First Name" type="text" value={currentLocation} onChange={e => setcurrentLocation(e.target.value)} />
+            <input className='custom-input' placeholder="status(eg undergraduate, graduate etc.)" type="text" value={status} onChange={e => setstatus(e.target.value)} />
 
-            <InputField type="text" placeholder="Status (eg. Undergraduate, New Grad...)"/>
             <p className='text-secondary'>Upload CV</p>
             <InputField type="File" placeholder="Upload Cv"/>
-            <InputField type="text" placeholder="Field Of Intrest One (eg. Graphics Design...)"/>
+            <input className='custom-input' placeholder="field of intrest(eg graphics design)" type="text" value={fieldOfInterest} onChange={e => setfieldOfInterest(e.target.value)} />
             <InputField type="text" placeholder="Field Of Intrest Two"/>
             
           </div>
           <div className='col-md profile-box'>
           <h5 className='mb-3 fw-bold text-center'>Education</h5>
-          <InputField type="text" placeholder="Status (eg. Completed, Undergoing...)"/>
+          <input className='custom-input' placeholder="status" type="text" value={graduationStatus} onChange={e => setgraduationStatus(e.target.value)} />
           
 
-            <InputField type="text" placeholder="School (eg university Of Lagos)"/>
-            <InputField type="text" placeholder="Course Of Study (eg computer science)"/>
+          <input className='custom-input' placeholder="school name" type="text" value={schoolName} onChange={e => setschoolName(e.target.value)} />
+          <input className='custom-input' placeholder="Degree(eg computer science)" type="text" value={degree} onChange={e => setdegree(e.target.value)} />
             <div className='row'>
                 <div className='col-md'>
-                <InputField type="text" placeholder="Start Year"/>
+                <input className='custom-input' placeholder="start year" type="text" value={startYear} onChange={e => setstartYear(e.target.value)} />
                 </div>
                 <div className='col-md'>
                 <InputField type="text" placeholder="End Year/Expected"/> 
                 </div>
             </div>
             
-                <InputField type="text" placeholder="GPA Class(optional)"/>
+            <input className='custom-input' placeholder="class(e.g firstclass)" type="text" value={gpa} onChange={e => setgpa(e.target.value)} />
           </div>
           <div className='col-md profile-box'>
           <h5 className='mb-3 fw-bold text-center'>Experience</h5>
@@ -108,26 +156,26 @@ export default function StudentProfile() {
             <div className='row'>
                 <div className='col-md'>
                 
-                <InputField type="text" placeholder="Job Title"/>
+                <input className='custom-input' placeholder="Job Title" type="text" value={jobTitle} onChange={e => setjobTitle(e.target.value)} />
                 </div>
                 <div className='col-md'>
-                <InputField type="text" placeholder="Company"/> 
+                <input className='custom-input' placeholder="Company" type="text" value={company} onChange={e => setcompany(e.target.value)} />
                 </div>
             </div>
 
-            <InputField type="text" placeholder="Skills(enter Up to five)"/>
-            <InputField type="url" placeholder="link to any works or projects(optional)"/>
+            <input className='custom-input' placeholder="skills(enter up to 5)" type="text" value={skills} onChange={e => setskills(e.target.value)} />
+            <input className='custom-input' placeholder="Link To any works( eg social media, website)" type="text" value={sampleLink} onChange={e => setsampleLink(e.target.value)} />
             <small>Certifications(optional)</small>
             <div className='row'>
                 <div className='col-md'>
                 
-                <InputField type="text" placeholder="Certificate Title"/>
+                <input className='custom-input' placeholder="certificate title" type="text" value={issuerName} onChange={e => setissuerName(e.target.value)} />
                 </div>
                 <div className='col-md'>
-                <InputField type="text" placeholder="Giver Of Certificate"/> 
+                <input className='custom-input' placeholder="Issuing Organization(eg coursera)" type="text" value={issuingOrg} onChange={e => setissuingOrg(e.target.value)} />
                 </div>
             </div>
-            <textarea className="form-control mb-4" id="exampleFormControlTextarea1" rows="3" placeholder='Tell us a bit about yourself including why you would make a good hire'></textarea>
+            <textarea className="form-control mb-4" id="exampleFormControlTextarea1" rows="3" placeholder='Tell us a bit about yourself including why you would make a good hire'  onChange={e => setcoverLetter(e.target.value)}>{coverLetter}</textarea>
 
             
 

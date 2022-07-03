@@ -7,6 +7,8 @@ import Header from '../components/Header'
 import JobCard from '../components/JobCard'
 
 export default function StudentProfile() {
+  
+
   return (
     <div>
       <Head>
