@@ -21,6 +21,8 @@ const {
   getJobById,
   decideApplicant,
 } = require("../controllers/job.controller");
+const customValidation = require("../middlewares/validation/customValidation");
+const { decideApplicantSchema } = require("../middlewares/validation/validation.Schema/company/index.schema");
 
 // Create job
 // route.post("/api/job/create", createJob);
@@ -65,8 +67,9 @@ route.post(
 );
 
 route.post(
-  "api/jobs/:jobid/decide?studentid&accept",
+  "/api/jobs/:jobid/decide",
   protectedRoutes,
+  customValidation(decideApplicantSchema, "query"),
   decideApplicant
 );
 
