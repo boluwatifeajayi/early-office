@@ -66,11 +66,17 @@ route.post(
   applyToJob
 );
 
-route.post(
+route.get(
   "/api/jobs/:jobid/decide",
-  protectedRoutes,
-  customValidation(decideApplicantSchema, "query"),
-  decideApplicant
+  
+  // protectedRoutes,
+  // customValidation(decideApplicantSchema, "query"),
+  (req, res)=>{
+    const obj = {};
+    customValidation(decideApplicantSchema, obj)()
+    res.send("in too deep")
+  }
+  // decideApplicant
 );
 
 module.exports = route;
