@@ -1,5 +1,6 @@
-const express = require("express")
-var route = express.Router()
+const express = require("express");
+var route = express.Router();
 
+// Update status of job
 
-module.exports = route
+module.exports = route;

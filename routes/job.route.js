@@ -1,5 +1,7 @@
 const express = require("express");
-const {jobApplicationSchema} = require("../middlewares/validation/validation.Schema/Jobs/jobApplication.schema");
+const {
+  jobApplicationSchema,
+} = require("../middlewares/validation/validation.Schema/Jobs/jobApplication.schema");
 const {
   createJobSchema,
 } = require("../middlewares/validation/validation.Schema/Jobs/createJob.schema");
@@ -17,6 +19,7 @@ const {
   getAllJobs,
   getCompanyJobs,
   getJobById,
+  decideApplicant,
 } = require("../controllers/job.controller");
 
 // Create job
@@ -61,6 +64,10 @@ route.post(
   applyToJob
 );
 
-// route.post("api/jobs/:jobid/decide?studentid&accept", protectedRoutes, decideApplicant)
+route.post(
+  "api/jobs/:jobid/decide?studentid&accept",
+  protectedRoutes,
+  decideApplicant
+);
 
 module.exports = route;

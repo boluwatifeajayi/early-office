@@ -4,11 +4,16 @@ const studentModel = require("../models/student.model");
 const mailSender = require("../middlewares/helperfunctions/mailSender");
 const {
   createJobBody,
-  appliedToJobTitle,
+  appliedToJobBody,
+  acceptedForJobBody,
+  declinedForJobBody,
 } = require("../middlewares/mails/body.mails");
+
 const {
   createJobTitle,
-  appliedToJobBody,
+  appliedToJobTitle,
+  declinedForJobTitle,
+  acceptedForJobTitle,
 } = require("../middlewares/mails/title.mails");
 
 const createJob = async (req, res) => {
@@ -29,11 +34,11 @@ const createJob = async (req, res) => {
       duration,
       location,
       benefits,
-      additionalInformation
+      additionalInformation,
     } = req.body;
     // const { companyName: orgName } = req.params;
     const currentOrg = await companyModel.findById(companyId);
-    const { _id:orgId, orgEmail, orgName, orgDescription } = currentOrg;
+    const { _id: orgId, orgEmail, orgName, orgDescription } = currentOrg;
     const newJob = await jobModel.create({
       role,
       jobName,
@@ -42,22 +47,25 @@ const createJob = async (req, res) => {
       numberOfOpenings,
       org: {
         orgId,
-        orgName, 
+        orgName,
         orgEmail,
-        orgDescription
+        orgDescription,
       },
       skillsNeeded,
       salary,
       duration,
       location,
       benefits,
-      additionalInformation
+      additionalInformation,
     });
 
-    // await mailSender(...orgEmail, {
-    //   title: createJobTitle(newJob),
-    //   body: createJobBody(newJob),
-    // });
+    await mailSender(
+      {
+        title: createJobTitle(newJob),
+        body: createJobBody(newJob),
+      },
+      orgEmail
+    );
     return res.status(201).json(newJob);
   } catch (error) {
     console.log(error.message);
@@ -69,7 +77,7 @@ const createJob = async (req, res) => {
 
 const getAllJobs = async (req, res) => {
   try {
-    const allJobs = await jobModel.find();
+    const allJobs = await jobModel.find().sort({ updatedAt: -1 });
     res.status(200).json(allJobs);
   } catch (error) {
     res.status(404).json({ error: "No jobs available" });
@@ -79,7 +87,9 @@ const getCompanyJobs = async (req, res) => {
   try {
     const { companyName } = req.params;
     const companyId = await companyModel.findOne({ orgName: companyName });
-    const jobsForCompany = await jobModel.find({ org: { orgId: companyId } });
+    const jobsForCompany = await jobModel
+      .find({ org: { orgId: companyId } })
+      .sort({ updatedAt: -1 });
     res.status(200).json(jobsForCompany);
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -99,7 +109,9 @@ const getJobById = async (req, res) => {
 const getStateJobs = async (req, res) => {
   try {
     const { state } = req.params;
-    const currentJob = await jobModel.find({ location: { state: state } });
+    const currentJob = await jobModel
+      .find({ location: { state: state } })
+      .sort({ updatedAt: -1 });
     res.status(200).json(currentJob);
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -109,7 +121,7 @@ const getStateJobs = async (req, res) => {
 const getTypeJobs = async (req, res) => {
   try {
     const { type } = req.params;
-    const currentJob = jobModel.find({ type });
+    const currentJob = jobModel.find({ type }).sort({ updatedAt: -1 });
     res.status(200).json(currentJob);
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -149,37 +161,59 @@ const applyToJob = async (req, res) => {
       { new: true }
     );
 
-    // await mailSender(...orgName, {
-    //   title: appliedToJobTitle(newJob, getStudent),
-    //   body: appliedToJobBody(newJob, getStudent),
-    // });
+    await mailSender(
+      {
+        title: appliedToJobTitle(newJob, getStudent),
+        body: appliedToJobBody(newJob, getStudent),
+      },
+      orgName
+    );
     res.status(201).json(newJobApplication);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-const decideApplicant = (req, res) =>{
-
+const decideApplicant = async (req, res) => {
   try {
-    const {companyId} = res.locals.decodedToken;
+    const { companyId } = res.locals.decodedToken;
     if (companyId == null)
-        return res
-          .status(400)
-          .json({ error: "Ensure you are a student to access this route" });
-    const {studentid, accept} = req.query;
-    const {jobId} = req.params;
+      return res.status(400).json({
+        error: "Ensure you are a registered company to access this route",
+      });
+    const { studentid, status } = req.query;
+    const { jobId } = req.params;
     const getStudent = studentModel.findById(studentid);
-    if((typeof accept != boolean) || (getStudent == null)) return res.status(403).json({error:"Invalid parameter passed"});
-    const currentJob = jobModel.findOneAndUpdate({_id:jobId, "student.studentId": studentid}, {$set:{"student.accepted":accept}} );
-    
 
+    if (typeof accept != boolean || getStudent == null)
+      return res.status(403).json({ error: "Invalid parameter passed" });
+    const currentJob = jobModel.findOneAndUpdate(
+      { _id: jobId, "student.studentId": studentid },
+      { $set: { "student.accepted": accept } },
+      { new: true }
+    );
+    if (accept) {
+      await mailSender(
+        {
+          title: acceptedForJobTitle(),
+          body: acceptedForJobBody(currentJob, getStudent),
+        },
+        getStudent.email
+      );
+    } else {
+      await mailSender(
+        {
+          title: declinedForJobTitle(),
+          body: declinedForJobBody(currentJob, getStudent),
+        },
+        getStudent.email
+      );
+    }
+    res.status(200).json(currentJob);
   } catch (error) {
-    
+    res.status(400).json({ error: error.message });
   }
-
-
-}
+};
 
 module.exports = {
   createJob,
@@ -190,4 +224,5 @@ module.exports = {
   getTypeJobs,
   getSalaryJobs,
   applyToJob,
+  decideApplicant,
 };

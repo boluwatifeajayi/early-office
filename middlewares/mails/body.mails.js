@@ -9,9 +9,15 @@ const studentSignUpBody = (student) =>
   `Congratulations <br> We're happy to have you here. `;
 const companySignUpBody = (company) =>
   `Congratulations <br> We're happy to have you here.`;
+const acceptedForJobBody = (job, student) =>
+  `Congratulations! <br>You have been accepted for the role of ${job.role} at ${job.org.orgName}`;
+const declinedForJobBody = (job, student) =>
+  `We appreciate the effort you put in applying for the role of ${job.role} at ${job.org.orgName} but your application was declined`;
 module.exports = {
   createJobBody,
   appliedToJobBody,
   studentSignUpBody,
   companySignUpBody,
+  acceptedForJobBody,
+  declinedForJobBody,
 };

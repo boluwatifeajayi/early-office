@@ -5,8 +5,8 @@ const jobSchema = new mongoose.Schema(
     role: {
       type: String,
     },
-    jobName:{
-      type:String
+    jobName: {
+      type: String,
     },
 
     jobResponsibility: {
@@ -31,9 +31,9 @@ const jobSchema = new mongoose.Schema(
       orgEmail: {
         type: String,
       },
-      orgDescription:{
-        type:String
-      }
+      orgDescription: {
+        type: String,
+      },
     },
     skillsNeeded: {
       type: [String],
@@ -61,8 +61,8 @@ const jobSchema = new mongoose.Schema(
         default: "Nigeria",
       },
     },
-    benefits:{
-      type:String
+    benefits: {
+      type: String,
     },
 
     additionalInformation: {
@@ -82,7 +82,7 @@ const jobSchema = new mongoose.Schema(
         appliedAt: {
           type: Date,
         },
-        // accepted:{type: Boolean}
+        accepted: { type: Boolean, default: false },
       },
     ],
   },

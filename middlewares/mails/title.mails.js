@@ -4,9 +4,14 @@ const appliedToJobTitle = (job, student) =>
 
 const studentSignUpTitle = () => `Sign up successful`;
 const companySignUpTitle = () => `Sign up successful`;
+
+const acceptedForJobTitle = () => `Application Status update`;
+const declinedForJobTitle = () => `Application Status update`;
 module.exports = {
   createJobTitle,
   appliedToJobTitle,
   studentSignUpTitle,
   companySignUpTitle,
+  acceptedForJobTitle,
+  declinedForJobTitle,
 };
