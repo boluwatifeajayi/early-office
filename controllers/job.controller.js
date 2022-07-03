@@ -13,6 +13,13 @@ const {
 
 const createJob = async (req, res) => {
   try {
+    const { companyId } = res.locals.decodedToken;
+    if (companyId == null)
+      return res
+        .status(400)
+        .json({
+          error: "Ensure you are a registered company to access this route",
+        });
     const {
       role,
       jobName,
@@ -24,9 +31,9 @@ const createJob = async (req, res) => {
       duration,
       location,
     } = req.body;
-    const { companyName: orgName } = req.params;
-    const currentOrg = await companyModel.findOne({ orgName });
-    const { orgId, orgEmail } = currentOrg;
+    // const { companyName: orgName } = req.params;
+    const currentOrg = await companyModel.findById(companyId);
+    const { orgId, orgEmail, orgName } = currentOrg;
     const newJob = await jobModel.create({
       role,
       jobName,
@@ -123,7 +130,9 @@ const applyToJob = async (req, res) => {
   try {
     const { studentId } = res.locals.decodedToken;
     if (studentId == null)
-      return res.status(400).json({ error: "Ensure you are a student to access this route" });
+      return res
+        .status(400)
+        .json({ error: "Ensure you are a student to access this route" });
     const { reasonToBeHired, jobAvailability } = req.body;
     const { jobid } = req.params;
     const appliedAt = Date.now();
