@@ -1,11 +1,22 @@
 const companyModel = require("../../models/company.model");
 const studentModel = require("../../models/student.model");
-const oAuthstudentSignUpSchema =
-  require("../../middlewares/validation/validation.Schema/signUp.schema").oAuthStudentSignUpSchema;
 const axios = require("axios");
-const hashPassword =
-  require("../../middlewares/helperfunctions/hashPassword.helper").hashPassword;
 const jwt = require("jsonwebtoken");
+const {
+  oAuthstudentSignUpSchema,
+} = require("../../middlewares/validation/validation.Schema/signUp.schema");
+const {
+  hashPassword,
+} = require("../../middlewares/helperfunctions/hashPassword.helper");
+const mailSender = require("../../middlewares/helperfunctions/mailSender");
+const {
+  studentSignUpTitle,
+  companySignUpTitle,
+} = require("../../middlewares/mails/title.mails");
+const {
+  studentSignUpBody,
+  companySignUpBody,
+} = require("../../middlewares/mails/body.mails");
 
 async function studentSignUp(req, res) {
   // destructuring req.body
@@ -32,6 +43,10 @@ async function studentSignUp(req, res) {
     };
 
     res.cookie("authToken", token);
+    //  await mailSender(...email, {
+    //     title:studentSignUpTitle(),
+    //     body: studentSignUpBody(newStudent)
+    //   })
     return res.status(201).json(response);
   } catch (error) {
     console.log(error.message);
@@ -77,6 +92,10 @@ async function companySignUp(req, res) {
     };
 
     res.cookie("authToken", token);
+    // await mailSender(...orgEmail, {
+    //   title:companySignUpTitle(),
+    //   body: companySignUpBody(newCompany)
+    // })
     return res.status(201).json(response);
   } catch (error) {
     console.log(error.message);
