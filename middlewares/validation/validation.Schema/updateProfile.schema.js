@@ -48,7 +48,7 @@ const updateStudentProfileSchema = joi.object().keys({
 const updateCompanyProfileSchema = joi.object().keys({
   orgDescription: joi.string().required(),
   orgPresence: joi.object().keys({
-    website: joi.string,
+    website: joi.string(),
     socialHandles: joi.object(),
     officalDocs: joi.string(),
   }),
