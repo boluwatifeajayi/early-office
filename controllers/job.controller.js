@@ -15,11 +15,9 @@ const createJob = async (req, res) => {
   try {
     const { companyId } = res.locals.decodedToken;
     if (companyId == null)
-      return res
-        .status(400)
-        .json({
-          error: "Ensure you are a registered company to access this route",
-        });
+      return res.status(400).json({
+        error: "Ensure you are a registered company to access this route",
+      });
     const {
       role,
       jobName,
@@ -72,12 +70,11 @@ const getAllJobs = async (req, res) => {
     res.status(404).json({ error: "No jobs available" });
   }
 };
-
 const getCompanyJobs = async (req, res) => {
   try {
     const { companyName } = req.params;
     const companyId = await companyModel.findOne({ orgName: companyName });
-    const jobsForCompany = await jobModel.find({ companyId });
+    const jobsForCompany = await jobModel.find({ org: { orgId: companyId } });
     res.status(200).json(jobsForCompany);
   } catch (error) {
     res.status(404).json({ error: error.message });
