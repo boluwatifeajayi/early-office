@@ -20,7 +20,7 @@ export default function Home() {
       </Head>
       <Header />
 
-      {/* <div className="container-main">
+      <div className="container-main">
         <Link href="/register">
           <a className="short-btn">Register</a>
         </Link>
@@ -51,7 +51,7 @@ export default function Home() {
         <Link href="/applicant">
           <a className="short-btn">Applicant</a>
         </Link>
-      </div> */}
+      </div>
       <Cr />
       <WhatsGreat />
       <Internships />
