@@ -159,6 +159,28 @@ const applyToJob = async (req, res) => {
   }
 };
 
+const decideApplicant = (req, res) =>{
+
+  try {
+    const {companyId} = res.locals.decodedToken;
+    if (companyId == null)
+        return res
+          .status(400)
+          .json({ error: "Ensure you are a student to access this route" });
+    const {studentid, accept} = req.query;
+    const {jobId} = req.params;
+    const getStudent = studentModel.findById(studentid);
+    if((typeof accept != boolean) || (getStudent == null)) return res.status(403).json({error:"Invalid parameter passed"});
+    const currentJob = jobModel.findOneAndUpdate({_id:jobId, "student.studentId": studentid}, {$set:{"student.accepted":accept}} );
+    
+
+  } catch (error) {
+    
+  }
+
+
+}
+
 module.exports = {
   createJob,
   getAllJobs,

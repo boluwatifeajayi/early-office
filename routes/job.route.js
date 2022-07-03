@@ -61,4 +61,6 @@ route.post(
   applyToJob
 );
 
+// route.post("api/jobs/:jobid/decide?studentid&accept", protectedRoutes, decideApplicant)
+
 module.exports = route;

@@ -82,6 +82,7 @@ const jobSchema = new mongoose.Schema(
         appliedAt: {
           type: Date,
         },
+        // accepted:{type: Boolean}
       },
     ],
   },
