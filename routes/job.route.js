@@ -1,6 +1,8 @@
 const express = require("express");
 const jobapplySchema = require("../middlewares/validation/validation.Schema/Jobs/jobApplication.schema");
-const createJobSchema = require("../middlewares/validation/validation.Schema/Jobs/createJob.schema");
+const {
+  createJobSchema,
+} = require("../middlewares/validation/validation.Schema/Jobs/createJob.schema");
 const validation = require("../middlewares/validation/validation");
 var route = express.Router();
 const {
