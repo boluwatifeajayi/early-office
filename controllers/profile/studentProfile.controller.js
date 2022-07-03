@@ -36,7 +36,7 @@ async function changeStudentPassword (req,res){
 
         const {password} = req.body
 
-        const updatedStudentProfile = await investmentCompanyModel.findByIdAndUpdate(studentId, 
+        const updatedStudentProfile = await studentModel.findByIdAndUpdate(studentId, 
         {password},
         { new : true })
         return res.status(200).json(updatedStudentProfile)
