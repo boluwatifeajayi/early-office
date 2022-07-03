@@ -119,10 +119,10 @@ export default function StudentProfile() {
         
        
        
-        <h1 className='main-job-heading'>{job.jobName}</h1>
+        {/* <h1 className='main-job-heading'>{job.org.orgName}</h1> */}
 
-        <p className='color'>{jobTitle.orgName}</p>
-        <p>{location.state}</p>
+        {/* <p className='color'>{jobTitle.orgName}</p> */} */
+        {/* <p>{location.state}</p>
         
         <div className='row mt-3 mb-4'>
         <div className='col-md'>
@@ -142,7 +142,7 @@ export default function StudentProfile() {
     <p className='borderr text-secondary'>{job.jobType}</p>
     <hr className='mt-3'/>
     <p className='sub-job-heading mt-2'>About Company</p>
-    <p className='job-text'>{jobTitle.orgDescription}</p>
+    {/* <p className='job-text'>{jobTitle.orgDescription}</p> */}
     {/* <p className='link mt-3'>Visit Company Website</p> */}
     <hr className='mt-3'/>
     <p className='sub-job-heading mt-2'>About Internship</p>

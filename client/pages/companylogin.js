@@ -31,7 +31,7 @@ export default function Register() {
         } , {withCredentials:true}).then(response => {
             setLoading(false)
             setcurrentcompanySession(response.data.authToken, response.data.currentCompany)
-            Router.push("/companyProfile");
+            Router.push("/companyDashboard");
             console.log('response', response)
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.authToken}`
         }).catch(error => {

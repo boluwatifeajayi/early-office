@@ -39,19 +39,19 @@ export default function StudentProfile() {
   
   
   
-    const isauth = () => {
-      if(!cookies.authToken){
-        router.push('/login')
-      }
-      else{
-        console.log("you are welcome")
-      }
-    }
+    // const isauth = () => {
+    //   if(!cookies.authToken){
+    //     router.push('/login')
+    //   }
+    //   else{
+    //     console.log("you are welcome")
+    //   }
+    // }
       
   
-    useEffect(() => {
-      isauth();
-    }, [])
+    // useEffect(() => {
+    //   isauth();
+    // }, [])
 
   
 

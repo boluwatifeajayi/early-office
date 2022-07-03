@@ -33,7 +33,7 @@ export default function Register() {
         }, {withCredentials:true}).then(response => {
             setLoading(false)
             setcurrentStudentSession(response.data.authToken, response.data.currentCompany)
-            Router.push("/companylogin");
+            Router.push("/companyProfile");
             console.log('response', response)
         }).catch(error => {
             setLoading(false);
