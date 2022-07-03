@@ -54,10 +54,10 @@ const createJob = async (req, res) => {
       additionalInformation
     });
 
-    await mailSender(...orgEmail, {
-      title: createJobTitle(newJob),
-      body: createJobBody(newJob),
-    });
+    // await mailSender(...orgEmail, {
+    //   title: createJobTitle(newJob),
+    //   body: createJobBody(newJob),
+    // });
     return res.status(201).json(newJob);
   } catch (error) {
     console.log(error.message);
@@ -149,10 +149,10 @@ const applyToJob = async (req, res) => {
       { new: true }
     );
 
-    await mailSender(...orgName, {
-      title: appliedToJobTitle(newJob, getStudent),
-      body: appliedToJobBody(newJob, getStudent),
-    });
+    // await mailSender(...orgName, {
+    //   title: appliedToJobTitle(newJob, getStudent),
+    //   body: appliedToJobBody(newJob, getStudent),
+    // });
     res.status(201).json(newJobApplication);
   } catch (error) {
     res.status(400).json({ error: error.message });
