@@ -13,6 +13,7 @@ const createJobSchema = joi.object().keys({
     state: joi.string(),
     country: joi.string(),
   }),
+  benefits: joi.string(),
   additionalInformation: joi.string(),
 
   // role: joi.string().required(),
@@ -27,6 +28,7 @@ const createJobSchema = joi.object().keys({
   //     state: joi.string(),
   //     country: joi.string(),
   // }),
+  // benefits: joi.string(),
   // additionalInformation: joi.string(),
 });
 

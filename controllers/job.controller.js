@@ -28,10 +28,12 @@ const createJob = async (req, res) => {
       salary,
       duration,
       location,
+      benefits,
+      additionalInformation
     } = req.body;
     // const { companyName: orgName } = req.params;
     const currentOrg = await companyModel.findById(companyId);
-    const { _id:orgId, orgEmail, orgName } = currentOrg;
+    const { _id:orgId, orgEmail, orgName, orgDescription } = currentOrg;
     const newJob = await jobModel.create({
       role,
       jobName,
@@ -40,13 +42,16 @@ const createJob = async (req, res) => {
       numberOfOpenings,
       org: {
         orgId,
+        orgName, 
         orgEmail,
-        orgName,
+        orgDescription
       },
       skillsNeeded,
       salary,
       duration,
       location,
+      benefits,
+      additionalInformation
     });
 
     await mailSender(...orgEmail, {

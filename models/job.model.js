@@ -31,6 +31,9 @@ const jobSchema = new mongoose.Schema(
       orgEmail: {
         type: String,
       },
+      orgDescription:{
+        type:String
+      }
     },
     skillsNeeded: {
       type: [String],
@@ -57,6 +60,9 @@ const jobSchema = new mongoose.Schema(
         type: String,
         default: "Nigeria",
       },
+    },
+    benefits:{
+      type:String
     },
 
     additionalInformation: {
