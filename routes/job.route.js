@@ -1,5 +1,5 @@
 const express = require("express");
-const {jobapplySchema} = require("../middlewares/validation/validation.Schema/Jobs/jobApplication.schema");
+const {jobApplicationSchema} = require("../middlewares/validation/validation.Schema/Jobs/jobApplication.schema");
 const {
   createJobSchema,
 } = require("../middlewares/validation/validation.Schema/Jobs/createJob.schema");
@@ -57,7 +57,7 @@ route.get("/api/jobs/salary", getSalaryJobs);
 route.post(
   "/api/jobs/:jobid/apply",
   protectedRoutes,
-  validation(jobapplySchema),
+  validation(jobApplicationSchema),
   applyToJob
 );
 
