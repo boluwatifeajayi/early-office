@@ -9,7 +9,9 @@ const {
   protectedRoutes,
 } = require("../../middlewares/authentication/protectedRoutes");
 const validation = require("../../middlewares/validation/validation");
-const updateCompanyProfileSchema = require("../../middlewares/validation/validation.Schema/updateProfile.schema");
+const {
+  updateCompanyProfileSchema,
+} = require("../../middlewares/validation/validation.Schema/updateProfile.schema");
 var route = express.Router();
 
 // Update Company profile
