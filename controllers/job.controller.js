@@ -223,6 +223,7 @@ const reviewStudent = async () => {
       return res.status(400).json({
         error: "Ensure you are a registered company to access this route",
       });
+    const getStudent = await studentModel.findById(studentId);
     const currentJob = await jobModel.findOne({
       _id: jobId,
       "student.studentId": studentId,

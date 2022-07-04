@@ -42,6 +42,7 @@ route.get("/api/jobs", getAllJobs);
 // Get company's job
 route.get("/api/:companyName/jobs", getCompanyJobs);
 
+// To review an applicant from a job posted by a company
 route.get(
   "/api/:companyName/jobs/id/:jobId/review/:studentId",
   protectedRoutes,
@@ -75,6 +76,7 @@ route.post(
   applyToJob
 );
 
+// TO DECIDE WHETHER TO ACCEPT OR DECLINE A STUDENT
 route.post(
   "/api/jobs/:jobid/decide",
   protectedRoutes,
