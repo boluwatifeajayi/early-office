@@ -88,7 +88,7 @@ const getCompanyJobs = async (req, res) => {
     const { companyName } = req.params;
     const companyId = await companyModel.findOne({ orgName: companyName });
     const jobsForCompany = await jobModel
-      .find({ org: { orgId: companyId } })
+      .find({ "org.orgId": companyId })
       .sort({ updatedAt: -1 });
     res.status(200).json(jobsForCompany);
   } catch (error) {
@@ -181,18 +181,16 @@ const decideApplicant = async (req, res) => {
       return res.status(400).json({
         error: "Ensure you are a registered company to access this route",
       });
-    const { studentid, status } = req.query;
+    const { studentId, status } = req.query;
     const { jobId } = req.params;
-    const getStudent = studentModel.findById(studentid);
-
-    if (typeof accept != boolean || getStudent == null)
-      return res.status(403).json({ error: "Invalid parameter passed" });
+    const getStudent = studentModel.findById(studentId);
+    // const queryData = ["pending", "accepted", "declined", "reviwed"];
     const currentJob = jobModel.findOneAndUpdate(
-      { _id: jobId, "student.studentId": studentid },
-      { $set: { "student.accepted": accept } },
+      { _id: jobId, "student.studentId": studentId },
+      { $set: { "student.status": status } },
       { new: true }
     );
-    if (accept) {
+    if (status.toLowercase() == "accepted") {
       await mailSender(
         {
           title: acceptedForJobTitle(),
@@ -200,7 +198,7 @@ const decideApplicant = async (req, res) => {
         },
         getStudent.email
       );
-    } else {
+    } else if (status.toLowercase() == "declined") {
       await mailSender(
         {
           title: declinedForJobTitle(),

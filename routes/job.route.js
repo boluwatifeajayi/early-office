@@ -22,7 +22,9 @@ const {
   decideApplicant,
 } = require("../controllers/job.controller");
 const customValidation = require("../middlewares/validation/customValidation");
-const { decideApplicantSchema } = require("../middlewares/validation/validation.Schema/company/index.schema");
+const {
+  decideApplicantSchema,
+} = require("../middlewares/validation/validation.Schema/company/index.schema");
 
 // Create job
 // route.post("/api/job/create", createJob);
@@ -68,17 +70,9 @@ route.post(
 
 route.get(
   "/api/jobs/:jobid/decide",
-  
-  // protectedRoutes,
-  // customValidation(decideApplicantSchema, "query"),
-  (req, res)=>{
-    const obj = {};
-    var valid = customValidation(decideApplicantSchema, obj)()
-    if (valid != true) return res.status(valid.status).json({error : valid.error})
-    
-    res.send("in too deep")
-  }
-  // decideApplicant
+  protectedRoutes,
+  customValidation(decideApplicantSchema, "query"),
+  decideApplicant
 );
 
 module.exports = route;
