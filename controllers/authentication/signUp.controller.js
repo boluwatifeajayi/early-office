@@ -43,10 +43,13 @@ async function studentSignUp(req, res) {
     };
 
     res.cookie("authToken", token);
-    //  await mailSender({
-    //     title:studentSignUpTitle(),
-    //     body: studentSignUpBody(newStudent)
-    //   }, email)
+    await mailSender(
+      {
+        title: studentSignUpTitle(),
+        body: studentSignUpBody(newStudent),
+      },
+      email
+    );
     return res.status(201).json(response);
   } catch (error) {
     console.log(error.message);
@@ -92,10 +95,13 @@ async function companySignUp(req, res) {
     };
 
     res.cookie("authToken", token);
-    // await mailSender({
-    //   title:companySignUpTitle(),
-    //   body: companySignUpBody(newCompany)
-    // },orgEmail)
+    await mailSender(
+      {
+        title: companySignUpTitle(),
+        body: companySignUpBody(newCompany),
+      },
+      orgEmail
+    );
     return res.status(201).json(response);
   } catch (error) {
     console.log(error.message);
