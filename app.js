@@ -36,6 +36,8 @@ app.use(companyRoutes);
 app.use(profileRoutes);
 app.use(jobRoutes);
 
+app.set('trust proxy', 1);
+
 // app.get("/check/:name", (req, res) => {
 //   res.json(req.params);
 // });
