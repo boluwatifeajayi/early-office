@@ -43,9 +43,9 @@ export default function StudentProfile() {
     }
   };
 
-  // useEffect(() => {
-  //   isauth();
-  // }, [])
+  useEffect(() => {
+    isauth();
+  }, []);
 
   const submit = async (e) => {
     e.preventDefault();
