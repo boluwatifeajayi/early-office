@@ -25,7 +25,7 @@ async function studentSignIn(req, res) {
         authToken: token,
       };
 
-      res.cookie("authToken",token, { sameSite: 'none', secure: true})
+      res.cookie("authToken",token, { sameSite: 'None', secure: true})
       return res.status(200).json(response);
     } else {
       return res.status(401).json("Incorrect Password");
@@ -58,7 +58,7 @@ async function companySignIn(req, res) {
         authToken: token,
       };
 
-      res.cookie("authToken",token, { sameSite: 'none', secure: true})
+      res.cookie("authToken",token, { sameSite: "None", secure: true})
       return res.status(200).json(response);
     } else {
       return res.status(401).json("Incorrect Password");
