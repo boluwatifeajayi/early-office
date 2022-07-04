@@ -166,8 +166,8 @@ const applyToJob = async (req, res) => {
 
     await mailSender(
       {
-        title: appliedToJobTitle(newJob, getStudent),
-        body: appliedToJobBody(newJob, getStudent),
+        title: appliedToJobTitle(newJobApplication, getStudent),
+        body: appliedToJobBody(newJobApplication, getStudent),
       },
       orgName
     );
