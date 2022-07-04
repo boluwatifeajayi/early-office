@@ -169,7 +169,7 @@ const applyToJob = async (req, res) => {
         title: appliedToJobTitle(newJobApplication, getStudent),
         body: appliedToJobBody(newJobApplication, getStudent),
       },
-      orgName
+      newJobApplication.org.orgName
     );
     res.status(201).json(newJobApplication);
   } catch (error) {
