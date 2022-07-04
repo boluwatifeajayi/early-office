@@ -5,15 +5,40 @@ import { BiDollar } from "react-icons/bi";
 import { IoAccessibilitySharp } from "react-icons/io5";
 import Image from "next/image";
 import im from "../public/logobb.png";
+import { useState } from "react";
 
 const Footer = () => {
+  const [se, setSe] = useState(false);
+  const categories = [
+    "UI/UX Design",
+    "Animation",
+    "Marketing",
+    "Graphics Design",
+    "Product Design",
+  ];
+
+  const handleCategory = () => {
+    setSe((prevSe) => !prevSe);
+  };
   return (
     <div>
       <div className="footer-wraper">
         <div className="footer-flex-1">
           <div className="footer-flex-1-child">
-            <article className="ar">
+            <article className="ar" onClick={handleCategory}>
               <span className="footer-item-title">Categories</span>
+              {se &&
+                categories.map((category) => {
+                  return (
+                    <ul>
+                      <li>
+                        <a href="#" id="res-categories-item">
+                          <span>{category}</span>
+                        </a>
+                      </li>
+                    </ul>
+                  );
+                })}
               <a className="categories-item" href="#">
                 <span>Digital Marketing</span>
               </a>
@@ -109,7 +134,7 @@ const Footer = () => {
               </a>
             </article>
             <article className="ar">
-              <span className="footer-item-title">More from Fiverr</span>
+              <span className="footer-item-title">More from Early Office</span>
               <a className="categories-item" href="#">
                 <span>Fiverr Business</span>
               </a>

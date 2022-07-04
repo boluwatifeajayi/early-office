@@ -11,6 +11,7 @@ export default function InputField(props) {
         type={props.type}
         value={props.value}
         onChange={props.onChange}
+        required={props.required}
       />
     </div>
   );

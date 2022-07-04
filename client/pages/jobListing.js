@@ -1,57 +1,52 @@
-import Head from 'next/head'
-import SearchField from '../components/SearchField'
-import Header from '../components/Header'
-import JobCard from '../components/JobCard'
+import Head from "next/head";
+import SearchField from "../components/SearchField";
+import Header from "../components/Header";
+import JobCard from "../components/JobCard";
 // import Router from "next/router";
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import moment from 'moment'
-
+import { useState, useEffect } from "react";
+import axios from "axios";
+import moment from "moment";
 
 const client = axios.create({
-  baseURL: "http://localhost:4070/api/jobs" 
+  baseURL: "http://localhost:4070/api/jobs",
 });
 
-
-
 export default function StudentProfile() {
-
   const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
     client.get().then((response) => {
-       setJobs(response.data);
+      setJobs(response.data);
     });
- }, []);
+  }, []);
 
-  
-// import React, { useState } from "react";
-// import Head from "next/head";
-// import SearchField from "../components/SearchField";
-// import Header from "../components/Header";
-// import JobCard from "../components/JobCard";
-// import jobListingData from "../data/jobListingData";
+  // import React, { useState } from "react";
+  // import Head from "next/head";
+  // import SearchField from "../components/SearchField";
+  // import Header from "../components/Header";
+  // import JobCard from "../components/JobCard";
+  // import jobListingData from "../data/jobListingData";
 
-// export default function StudentProfile() {
-//   const [jobTitle, setJobTitle] = useState("");
-//   const [location, setLocation] = useState("");
-//   const [filtered, setFiltered] = useState([]);
+  // export default function StudentProfile() {
+  // const [jobTitle, setJobTitle] = useState("");
+  // const [location, setLocation] = useState("");
+  // const [filtered, setFiltered] = useState([]);
 
-//   const handleSearch = () => {
-//     setFiltered(
-//       jobListingData.filter((jobList) => {
-//         const titleLower = jobList[0].toLowerCase();
-//         const locationLower = jobList[2].toLowerCase();
-//         if (!jobTitle && !location) {
-//           return;
-//         }
-//         return (
-//           locationLower.includes(location.toLowerCase()) &&
-//           titleLower.includes(jobTitle.toLowerCase())
-//         );
-//       })
-//     );
-//   };
+  // const handleSearch = () => {
+  //   setFiltered(
+  //     jobListingData.filter((jobList) => {
+  //       const titleLower = jobList[0].toLowerCase();
+  //       const locationLower = jobList[2].toLowerCase();
+  //       if (!jobTitle && !location) {
+  //         return;
+  //       }
+  //       return (
+  //         locationLower.includes(location.toLowerCase()) &&
+  //         titleLower.includes(jobTitle.toLowerCase())
+  //       );
+  //     })
+  //   );
+  // };
 
   return (
     <div>
@@ -63,29 +58,28 @@ export default function StudentProfile() {
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         />
       </Head>
-      
-      <Header/>
-      
-      <div className='listing-container'>
-        <SearchField/>
-        <div className='row mt-3'>
-        {jobs.map((job) => {
-        return (
-          <JobCard 
-            jobTitle={job.jobName}
-            company={job.org.orgName}
-            location={job.location.state}
-            jobtype={job.jobType}
-            salary={job.salary}
-            duration={job.duration}
-            deadline={moment(job.createdAt, "YYYYMMDD=").fromNow()} 
-            link={'/internships/'+job._id}
-          />
-       );
-    })}
-        
 
-      {/* <Header />
+      <Header />
+
+      <div className="listing-container">
+        <SearchField />
+        <div className="row mt-3">
+          {jobs.map((job) => {
+            return (
+              <JobCard
+                jobTitle={job.jobName}
+                company={job.org.orgName}
+                location={job.location.state}
+                jobtype={job.jobType}
+                salary={job.salary}
+                duration={job.duration}
+                deadline={moment(job.createdAt, "YYYYMMDD=").fromNow()}
+                link={"/internships/" + job._id}
+              />
+            );
+          })}
+
+          {/* <Header />
       <div className="listing-container">
         <SearchField
           jobTitle={jobTitle}
@@ -126,9 +120,8 @@ export default function StudentProfile() {
           })}
         </div>
       </div> */}
-      </div>
+        </div>
       </div>
     </div>
   );
-
 }

@@ -1,195 +1,355 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import InputField from '../components/InputField'
-import ButtonField from '../components/ButtonField'
-import { useState } from 'react'
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import InputField from "../components/InputField";
+import ButtonField from "../components/ButtonField";
+import { useState } from "react";
+import NigerianStates from "../data/NigerianStates";
 
-import axios from 'axios'
-import {setcurrentStudentSession} from './Utils/common'
+import axios from "axios";
+import { setcurrentStudentSession } from "./Utils/common";
 
-import Header from '../components/Header'
-import { useCookies } from 'react-cookie';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router'
-
+import Header from "../components/Header";
+import { useCookies } from "react-cookie";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function StudentProfile() {
-  
-  const [currentLocation, setcurrentLocation] = useState('');
-  const [preferredLanguage, setpreferredLanguage] = useState('');
-  const [status, setstatus] = useState('');
-  const [fieldOfInterest, setfieldOfInterest] = useState('');
-  const [graduationStatus, setgraduationStatus] = useState('');
-  const [schoolName, setschoolName] = useState('');
-  const [startYear, setstartYear] = useState('');
-  const [degree, setdegree] = useState('');
-  const [gpa, setgpa] = useState('');
-  const [company, setcompany] = useState('');
-  const [jobTitle, setjobTitle] = useState('');
-  const [issuerName, setissuerName] = useState('');
-  const [issuingOrg, setissuingOrg] = useState('');
-  const [skills, setskills] = useState('');
-  const [sampleLink, setsampleLink] = useState('');
-  const [coverLetter, setcoverLetter] = useState('');
+  const [currentLocation, setcurrentLocation] = useState("");
+  const [preferredLanguage, setpreferredLanguage] = useState("");
+  const [status, setstatus] = useState("");
+  const [fieldOfInterest, setfieldOfInterest] = useState("");
+  const [graduationStatus, setgraduationStatus] = useState("");
+  const [schoolName, setschoolName] = useState("");
+  const [startYear, setstartYear] = useState("");
+  const [degree, setdegree] = useState("");
+  const [gpa, setgpa] = useState("");
+  const [company, setcompany] = useState("");
+  const [jobTitle, setjobTitle] = useState("");
+  const [issuerName, setissuerName] = useState("");
+  const [issuingOrg, setissuingOrg] = useState("");
+  const [skills, setskills] = useState("");
+  const [sampleLink, setsampleLink] = useState("");
+  const [coverLetter, setcoverLetter] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [nigeriaStates, setNigeriaStates] = useState(
+    Object.keys(NigerianStates[0])
+  );
+
   const [cookies, setCookie] = useCookies();
-  const router = useRouter()
-  
-  
-  
-    // const isauth = () => {
-    //   if(!cookies.authToken){
-    //     router.push('/login')
-    //   }
-    //   else{
-    //     console.log("you are welcome")
-    //   }
-    // }
-      
-  
-    // useEffect(() => {
-    //   isauth();
-    // }, [])
+  const router = useRouter();
 
-  
+  console.log(nigeriaStates);
+  // const isauth = () => {
+  //   if(!cookies.authToken){
+  //     router.push('/login')
+  //   }
+  //   else{
+  //     console.log("you are welcome")
+  //   }
+  // }
 
+  // useEffect(() => {
+  //   isauth();
+  // }, [])
 
-
-  
-  
   const submit = async (e) => {
     e.preventDefault();
-    
+
     setError(null);
-    setLoading(true)
-    
-    axios.post("http://localhost:4070/api/student/profile/update", {
-        currentLocation: currentLocation,
-        preferredLanguage: preferredLanguage,
-        status: status,
-        fieldOfInterest: fieldOfInterest,
-        graduation: [{schoolName, startYear, degree, gpa}],
-        workExperience: [{company, jobTitle, certifications: [{issuerName, issuingOrg}]}],
-        skills: [skills],
-        workSamples: [{coverLetter, sampleLink}]
-    } , { withCredentials: true,
-      
-     
-    }).then(response => {
-        setLoading(false)
-        setcurrentStudentSession(response.data.authToken, response.data.currentStudent)
-        Router.push("/jobListing");
-        console.log('response', response)
-    }).catch(error => {
+    setLoading(true);
+
+    axios
+      .post(
+        "http://localhost:4070/api/student/profile/update",
+        {
+          currentLocation: currentLocation,
+          preferredLanguage: preferredLanguage,
+          status: status,
+          fieldOfInterest: fieldOfInterest,
+          graduation: [{ schoolName, startYear, degree, gpa }],
+          workExperience: [
+            { company, jobTitle, certifications: [{ issuerName, issuingOrg }] },
+          ],
+          skills: [skills],
+          workSamples: [{ coverLetter, sampleLink }],
+        },
+        { withCredentials: true }
+      )
+      .then((response) => {
         setLoading(false);
-        if(error.code === "ERR_BAD_REQUEST"){
-            setError(error.response.data.error)
+        setcurrentStudentSession(
+          response.data.authToken,
+          response.data.currentStudent
+        );
+        Router.push("/jobListing");
+        console.log("response", response);
+      })
+      .catch((error) => {
+        setLoading(false);
+        if (error.code === "ERR_BAD_REQUEST") {
+          setError(error.response.data.error);
+        } else {
+          setError("something went wrong, Please Try again later");
         }
-        
-        else{
-            setError("something went wrong, Please Try again later")
-        }
-        console.error('error >>> ', error);
-    });
-}
+        console.error("error >>> ", error);
+      });
+  };
 
   return (
     <div>
       <Head>
-    
         <meta name="description" content="Generated by create next app" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"/>
         <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+          crossorigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         />
       </Head>
-      <Header/>
-      
-      <div className='profile-container'>
-        <h1 className='mb-4'>Let's Complete Your Profile And Get You Hired</h1>
+      <Header />
+
+      <div className="profile-container">
+        <h1 className="mb-4">Let's Complete Your Profile And Get You Hired</h1>
         <form onSubmit={submit}>
-        <div className='row'>
-          <div className='col-md profile-box'>
-          <h5 className='mb-3 fw-bold text-center'>Personal Details</h5>
-            <div className='row'>
-                <div className='col-md'>
-                <input className='custom-input' placeholder="Gender" type="text" value={preferredLanguage} onChange={e => setpreferredLanguage(e.target.value)} />
+          <div className="row">
+            <div className="col-md profile-box">
+              <h5 className="mb-3 fw-bold text-center">Personal Details</h5>
+              <div className="row">
+                <div className="col-md">
+                  <p>Gender</p>
+                  <select
+                    className="custom-input"
+                    placeholder="Gender"
+                    value={preferredLanguage}
+                    onChange={(e) => setpreferredLanguage(e.target.value)}
+                  >
+                    <option selected>Male</option>
+                    <option>Female</option>
+                  </select>
                 </div>
-                <div className='col-md'>
-                <input className='custom-input' placeholder="Current Location" type="text" value={currentLocation} onChange={e => setcurrentLocation(e.target.value)} />
+                <p>Current Location</p>
+                <div className="col-md">
+                  <select
+                    className="custom-input"
+                    placeholder="Current Location"
+                    type="text"
+                    value={currentLocation}
+                    required
+                    onChange={(e) => setcurrentLocation(e.target.value)}
+                  >
+                    {nigeriaStates.map((state) => {
+                      return <option>{state}</option>;
+                    })}
+                  </select>
                 </div>
+              </div>
+
+              <p>status(eg undergraduate, graduate etc.)</p>
+              <select
+                className="custom-input"
+                placeholder="status(eg undergraduate, graduate etc.)"
+                type="text"
+                value={status}
+                onChange={(e) => setstatus(e.target.value)}
+              >
+                <option selected>Undergraduate</option>
+                <option>Fresh Graduate</option>
+                <option>NYSC Corper</option>
+              </select>
+
+              <p className="text-secondary">Upload CV</p>
+              {/* <InputField type="File" placeholder="Upload Cv" required={true} /> */}
+              <input
+                type="file"
+                placeholder="Upload Cv"
+                style={{ marginBottom: "20px" }}
+              />
+              <p>Field of Interest (eg graphics design)</p>
+              <select
+                className="custom-input"
+                placeholder="field of intrest(eg graphics design)"
+                type="text"
+                value={fieldOfInterest}
+                onChange={(e) => setfieldOfInterest(e.target.value)}
+              >
+                <option value="">Graphics Design</option>
+                <option value="">Animation</option>
+                <option value="">Web Development</option>
+                <option value="">Mobile App Development</option>
+                <option value="">Ui/Ux Design</option>
+                <option value="">Product Management</option>
+                <option value="">Marketing</option>
+              </select>
+              <p>Field of Interest 2</p>
+              <select
+                className="custom-input"
+                placeholder="field of intrest(eg graphics design)"
+                type="text"
+                value={fieldOfInterest}
+                onChange={(e) => setfieldOfInterest(e.target.value)}
+              >
+                <option value="">Graphics Design</option>
+                <option value="">Animation</option>
+                <option value="">Web Development</option>
+                <option value="">Mobile App Development</option>
+                <option value="">Ui/Ux Design</option>
+                <option value="">Product Management</option>
+                <option value="">Marketing</option>
+              </select>
             </div>
+            <div className="col-md profile-box">
+              <h5 className="mb-3 fw-bold text-center">Education</h5>
+              <p>Status</p>
+              <select
+                className="custom-input"
+                placeholder="status"
+                type="text"
+                value={graduationStatus}
+                onChange={(e) => setgraduationStatus(e.target.value)}
+              >
+                <option selected>Student</option>
+                <option>Graduate</option>
+              </select>
 
-            <input className='custom-input' placeholder="status(eg undergraduate, graduate etc.)" type="text" value={status} onChange={e => setstatus(e.target.value)} />
+              <p>School Name</p>
+              <input
+                className="custom-input"
+                placeholder="school name"
+                type="text"
+                value={schoolName}
+                onChange={(e) => setschoolName(e.target.value)}
+              />
 
-            <p className='text-secondary'>Upload CV</p>
-            <InputField type="File" placeholder="Upload Cv"/>
-            <input className='custom-input' placeholder="field of intrest(eg graphics design)" type="text" value={fieldOfInterest} onChange={e => setfieldOfInterest(e.target.value)} />
-            <InputField type="text" placeholder="Field Of Intrest Two"/>
-            
+              <p>Degree</p>
+              <input
+                className="custom-input"
+                placeholder="Degree(eg computer science)"
+                type="text"
+                value={degree}
+                onChange={(e) => setdegree(e.target.value)}
+              />
+              <div className="row">
+                <div className="col-md">
+                  <p>Start Year</p>
+                  <input
+                    className="custom-input"
+                    placeholder="start year"
+                    type="text"
+                    value={startYear}
+                    onChange={(e) => setstartYear(e.target.value)}
+                  />
+                </div>
+                <div className="col-md">
+                  <p>End Yea/Expected</p>
+                  <input
+                    className="custom-input"
+                    placeholder="End year/Expected"
+                    type="text"
+                    value={startYear}
+                    onChange={(e) => setstartYear(e.target.value)}
+                  />
+                </div>
+              </div>
+              <p>Class</p>
+              <select
+                className="custom-input"
+                placeholder="class(e.g firstclass)"
+                type="text"
+                value={gpa}
+                onChange={(e) => setgpa(e.target.value)}
+              >
+                <option>First Class</option>
+                <option>{"Second Class (Upper)"}</option>
+                <option>{"Second Class (Lower)"}</option>
+                <option>Third Class</option>
+              </select>
+            </div>
+            <div className="col-md profile-box">
+              <h5 className="mb-3 fw-bold text-center">Experience</h5>
+
+              <small>Work Experience(optional)</small>
+              <div className="row">
+                <div className="col-md">
+                  <input
+                    className="custom-input"
+                    placeholder="Job Title"
+                    type="text"
+                    value={jobTitle}
+                    onChange={(e) => setjobTitle(e.target.value)}
+                  />
+                </div>
+                <div className="col-md">
+                  <input
+                    className="custom-input"
+                    placeholder="Company"
+                    type="text"
+                    value={company}
+                    onChange={(e) => setcompany(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <input
+                className="custom-input"
+                placeholder="skills(enter up to 5)"
+                type="text"
+                value={skills}
+                onChange={(e) => setskills(e.target.value)}
+              />
+              <input
+                className="custom-input"
+                placeholder="Link To any works( eg social media, website)"
+                type="text"
+                value={sampleLink}
+                onChange={(e) => setsampleLink(e.target.value)}
+              />
+              <small>Certifications(optional)</small>
+              <div className="row">
+                <div className="col-md">
+                  <input
+                    className="custom-input"
+                    placeholder="certificate title"
+                    type="text"
+                    value={issuerName}
+                    onChange={(e) => setissuerName(e.target.value)}
+                  />
+                </div>
+                <div className="col-md">
+                  <input
+                    className="custom-input"
+                    placeholder="Issuing Organization(eg coursera)"
+                    type="text"
+                    value={issuingOrg}
+                    onChange={(e) => setissuingOrg(e.target.value)}
+                  />
+                </div>
+              </div>
+              <textarea
+                className="form-control mb-4"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                placeholder="Tell us a bit about yourself including why you would make a good hire"
+                onChange={(e) => setcoverLetter(e.target.value)}
+              >
+                {coverLetter}
+              </textarea>
+            </div>
           </div>
-          <div className='col-md profile-box'>
-          <h5 className='mb-3 fw-bold text-center'>Education</h5>
-          <input className='custom-input' placeholder="status" type="text" value={graduationStatus} onChange={e => setgraduationStatus(e.target.value)} />
-          
-
-          <input className='custom-input' placeholder="school name" type="text" value={schoolName} onChange={e => setschoolName(e.target.value)} />
-          <input className='custom-input' placeholder="Degree(eg computer science)" type="text" value={degree} onChange={e => setdegree(e.target.value)} />
-            <div className='row'>
-                <div className='col-md'>
-                <input className='custom-input' placeholder="start year" type="text" value={startYear} onChange={e => setstartYear(e.target.value)} />
-                </div>
-                <div className='col-md'>
-                <InputField type="text" placeholder="End Year/Expected"/> 
-                </div>
-            </div>
-            
-            <input className='custom-input' placeholder="class(e.g firstclass)" type="text" value={gpa} onChange={e => setgpa(e.target.value)} />
+          <div className="container-btn">
+            {error && <div className="mt-2 text-danger">{error}</div>}
+            <ButtonField
+              buttonText="Submit"
+              buttonClass="bt-background width"
+            />
           </div>
-          <div className='col-md profile-box'>
-          <h5 className='mb-3 fw-bold text-center'>Experience</h5>
-            
-            <small>Work Experience(optional)</small>
-            <div className='row'>
-                <div className='col-md'>
-                
-                <input className='custom-input' placeholder="Job Title" type="text" value={jobTitle} onChange={e => setjobTitle(e.target.value)} />
-                </div>
-                <div className='col-md'>
-                <input className='custom-input' placeholder="Company" type="text" value={company} onChange={e => setcompany(e.target.value)} />
-                </div>
-            </div>
-
-            <input className='custom-input' placeholder="skills(enter up to 5)" type="text" value={skills} onChange={e => setskills(e.target.value)} />
-            <input className='custom-input' placeholder="Link To any works( eg social media, website)" type="text" value={sampleLink} onChange={e => setsampleLink(e.target.value)} />
-            <small>Certifications(optional)</small>
-            <div className='row'>
-                <div className='col-md'>
-                
-                <input className='custom-input' placeholder="certificate title" type="text" value={issuerName} onChange={e => setissuerName(e.target.value)} />
-                </div>
-                <div className='col-md'>
-                <input className='custom-input' placeholder="Issuing Organization(eg coursera)" type="text" value={issuingOrg} onChange={e => setissuingOrg(e.target.value)} />
-                </div>
-            </div>
-            <textarea className="form-control mb-4" id="exampleFormControlTextarea1" rows="3" placeholder='Tell us a bit about yourself including why you would make a good hire'  onChange={e => setcoverLetter(e.target.value)}>{coverLetter}</textarea>
-
-            
-
-          </div>
-        </div>
-        <div className='container-btn'>
-        {error && <div className='mt-2 text-danger'>{error}</div>}
-        <ButtonField buttonText="Submit" buttonClass="bt-background width"/>
-        </div>
-        
         </form>
-        
       </div>
-      
     </div>
-  )
+  );
 }

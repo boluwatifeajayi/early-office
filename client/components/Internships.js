@@ -8,24 +8,19 @@ import { FaKeybase } from "react-icons/fa";
 const Internships = () => {
   const cities = [
     "Work from Home",
-    "Delhi/NCR",
-    "Bangalore",
-    "Mumbai",
-    "Hyderabad",
-    "Chennai",
-    "Kolkata",
-    "Intertational",
+    "Lagos",
+    "Abuja",
+    "Ogun",
+    "Delta",
+    "Port Harcourt",
   ];
 
   const categories = [
-    "Part-time",
-    "Engineering",
-    "Ngo",
-    "MBA",
-    "Design",
-    "Science",
-    "Media",
-    "Humanities",
+    "UI/UX Design",
+    "Animation",
+    "Marketing",
+    "Graphics Design",
+    "Product Design",
   ];
 
   return (

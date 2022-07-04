@@ -106,3 +106,10 @@
 .gh {
     margin-bottom: 10px;
 }
+
+@media screen and (max-width: 500px ) {
+    .inRow2 {
+        flex-direction: column;
+        align-items: flex-start ;
+    }
+}
