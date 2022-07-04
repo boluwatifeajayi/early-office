@@ -73,7 +73,9 @@ route.get(
   // customValidation(decideApplicantSchema, "query"),
   (req, res)=>{
     const obj = {};
-    customValidation(decideApplicantSchema, obj)()
+    var valid = customValidation(decideApplicantSchema, obj)()
+    if (valid != true) return res.status(valid.status).json({error : valid.error})
+    
     res.send("in too deep")
   }
   // decideApplicant
