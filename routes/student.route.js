@@ -1,11 +1,8 @@
 const express = require("express");
-const getStudents = require("../controllers/student.controller").getStudents;
-const getStudentById =
-  require("../controllers/student.controller").getStudentById;
-const getStudentByLocation =
-  require("../controllers/student.controller").getStudentByLocation;
-const getStudentByInterest =
-  require("../controllers/student.controller").getStudentByInterest;
+const { getStudents } = require("../controllers/student.controller");
+const { getStudentById } = require("../controllers/student.controller");
+const { getStudentByLocation } = require("../controllers/student.controller");
+const { getStudentByInterest } = require("../controllers/student.controller");
 var route = express.Router();
 
 // Get all students

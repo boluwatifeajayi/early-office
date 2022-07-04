@@ -10,6 +10,7 @@ const nodemailer = require("nodemailer");
 // Requiring routes
 const authentication = require("./routes/authentication/indexAuthentication.route");
 const studentRoutes = require("./routes/student.route");
+const companyRoutes = require("./routes/company.route");
 const profileRoutes = require("./routes/profile/index.profile");
 const jobRoutes = require("./routes/job.route");
 const mailSender = require("./middlewares/helperfunctions/mailSender");
@@ -31,6 +32,7 @@ app.use(cookieParser());
 // Using routes
 app.use(authentication);
 app.use(studentRoutes);
+app.use(companyRoutes);
 app.use(profileRoutes);
 app.use(jobRoutes);
 
