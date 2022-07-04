@@ -183,9 +183,9 @@ const decideApplicant = async (req, res) => {
       });
     const { studentId, status } = req.query;
     const { jobId } = req.params;
-    const getStudent = studentModel.findById(studentId);
+    const getStudent = await studentModel.findById(studentId);
     // const queryData = ["pending", "accepted", "declined", "reviwed"];
-    const currentJob = jobModel.findOneAndUpdate(
+    const currentJob = await jobModel.findOneAndUpdate(
       { _id: jobId, "student.studentId": studentId },
       { $set: { "student.status": status } },
       { new: true }
