@@ -7,6 +7,7 @@ const companySignUpTitle = () => `Sign up successful`;
 
 const acceptedForJobTitle = () => `Application Status update`;
 const declinedForJobTitle = () => `Application Status update`;
+const reviewedForJobTitle = () => `Your application has been reviewed!`;
 module.exports = {
   createJobTitle,
   appliedToJobTitle,
@@ -14,4 +15,5 @@ module.exports = {
   companySignUpTitle,
   acceptedForJobTitle,
   declinedForJobTitle,
+  reviewedForJobTitle,
 };

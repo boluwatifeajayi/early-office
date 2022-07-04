@@ -34,16 +34,16 @@ app.use(studentRoutes);
 app.use(profileRoutes);
 app.use(jobRoutes);
 
-app.get("/", (req, res) => {
-  res.json("doneeee");
-});
+// app.get("/check/:name", (req, res) => {
+//   res.json(req.params);
+// });
 
-app.get("/mails", async (req, res) => {
-  const mailer = await mailSender();
-  const responseCode = mailer;
-  if (responseCode != 250) return "nooo";
-  res.json(mailer);
-});
+// app.get("/mails", async (req, res) => {
+//   const mailer = await mailSender();
+//   const responseCode = mailer;
+//   if (responseCode != 250) return "nooo";
+//   res.json(mailer);
+// });
 
 // Database connection and starting the server
 const PORT = process.env.PORT;

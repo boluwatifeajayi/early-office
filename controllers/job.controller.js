@@ -7,6 +7,7 @@ const {
   appliedToJobBody,
   acceptedForJobBody,
   declinedForJobBody,
+  reviewedForJobBody,
 } = require("../middlewares/mails/body.mails");
 
 const {
@@ -14,6 +15,7 @@ const {
   appliedToJobTitle,
   declinedForJobTitle,
   acceptedForJobTitle,
+  reviewedForJobTitle,
 } = require("../middlewares/mails/title.mails");
 
 const createJob = async (req, res) => {
@@ -213,6 +215,33 @@ const decideApplicant = async (req, res) => {
   }
 };
 
+const reviewStudent = async () => {
+  try {
+    const { companyId } = res.locals.decodedToken;
+    const { companyName, jobId, studentId } = req.params;
+    if (companyId == null)
+      return res.status(400).json({
+        error: "Ensure you are a registered company to access this route",
+      });
+    const currentJob = await jobModel.findOne({
+      _id: jobId,
+      "student.studentId": studentId,
+      "org.orgName": companyName,
+    });
+    currentJob.$set({ "student.status": "reviewed" });
+    await mailSender(
+      {
+        title: reviewedForJobTitle(),
+        body: reviewedForJobBody(currentJob),
+      },
+      getStudent.email
+    );
+    res.status(200).json(currentJob);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   createJob,
   getAllJobs,
@@ -223,4 +252,5 @@ module.exports = {
   getSalaryJobs,
   applyToJob,
   decideApplicant,
+  reviewStudent,
 };

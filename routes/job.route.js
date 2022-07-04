@@ -20,6 +20,7 @@ const {
   getCompanyJobs,
   getJobById,
   decideApplicant,
+  reviewStudent,
 } = require("../controllers/job.controller");
 const customValidation = require("../middlewares/validation/customValidation");
 const {
@@ -41,7 +42,11 @@ route.get("/api/jobs", getAllJobs);
 // Get company's job
 route.get("/api/:companyName/jobs", getCompanyJobs);
 
-route.get("/api/:companyName/jobs/job", getCompanyJobs);
+route.get(
+  "/api/:companyName/jobs/id/:jobId/review/:studentId",
+  protectedRoutes,
+  reviewStudent
+);
 
 // Get job by id
 route.get("/api/jobs/id/:jobId", getJobById);
