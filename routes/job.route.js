@@ -41,6 +41,8 @@ route.get("/api/jobs", getAllJobs);
 // Get company's job
 route.get("/api/:companyName/jobs", getCompanyJobs);
 
+route.get("/api/:companyName/jobs/job", getCompanyJobs);
+
 // Get job by id
 route.get("/api/jobs/id/:jobId", getJobById);
 
@@ -68,7 +70,7 @@ route.post(
   applyToJob
 );
 
-route.get(
+route.post(
   "/api/jobs/:jobid/decide",
   protectedRoutes,
   customValidation(decideApplicantSchema, "query"),
