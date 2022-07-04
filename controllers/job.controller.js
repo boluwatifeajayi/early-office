@@ -88,9 +88,8 @@ const getAllJobs = async (req, res) => {
 const getCompanyJobs = async (req, res) => {
   try {
     const { companyName } = req.params;
-    const { _id: companyId } = await companyModel.findOne({
-      orgName: companyName,
-    });
+    const currentCompany = await companyModel.findOne({ orgName: companyName });
+    const { _id: companyId } = currentCompany;
     const jobsForCompany = await jobModel
       .find({ "org.orgId": companyId })
       .sort({ updatedAt: -1 });
