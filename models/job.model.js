@@ -23,7 +23,7 @@ const jobSchema = new mongoose.Schema(
 
     org: {
       orgId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
       },
       orgName: {
         type: String,
@@ -71,7 +71,7 @@ const jobSchema = new mongoose.Schema(
     student: [
       {
         studentId: {
-          type: String,
+          type: mongoose.Schema.Types.ObjectId,
         },
         reasonToBeHired: {
           type: String,
