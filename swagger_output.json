@@ -455,7 +455,7 @@
       }
     },
     "/api/jobs/{jobid}/decide": {
-      "post": {
+      "patch": {
         "description": "",
         "parameters": [
           {
@@ -494,7 +494,7 @@
       }
     },
     "/api/company/profile/update": {
-      "post": {
+      "put": {
         "description": "",
         "parameters": [
           {
@@ -541,7 +541,7 @@
       }
     },
     "/api/company/profile/update/password": {
-      "post": {
+      "patch": {
         "description": "",
         "parameters": [
           {
@@ -576,7 +576,7 @@
       }
     },
     "/api/student/profile/update": {
-      "post": {
+      "put": {
         "description": "",
         "parameters": [
           {
@@ -641,7 +641,7 @@
       }
     },
     "/api/student/profile/update/password": {
-      "post": {
+      "patch": {
         "description": "",
         "parameters": [
           {

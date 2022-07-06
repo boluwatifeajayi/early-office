@@ -13,7 +13,7 @@ const {
 var route = express.Router();
 
 // Update student profile
-route.post(
+route.put(
   "/api/student/profile/update",
   protectedRoutes,
   validation(updateStudentProfileSchema),
@@ -22,7 +22,7 @@ route.post(
 
 // Change student password
 // route.post("/api/student/change/password",protectedRoutes,changeStudentPassword)
-route.post(
+route.patch(
   "/api/student/profile/update/password",
   protectedRoutes,
   changeStudentPassword

@@ -15,7 +15,7 @@ const {
 var route = express.Router();
 
 // Update Company profile
-route.post(
+route.put(
   "/api/company/profile/update",
   protectedRoutes,
   validation(updateCompanyProfileSchema),
@@ -24,7 +24,7 @@ route.post(
 
 // Change Company password
 // route.post("/api/Company/change/password",protectedRoutes,changeStudentPassword)
-route.post(
+route.patch(
   "/api/company/profile/update/password",
   protectedRoutes,
   changeStudentPassword

@@ -77,7 +77,7 @@ route.post(
 );
 
 // TO DECIDE WHETHER TO ACCEPT OR DECLINE A STUDENT
-route.post(
+route.patch(
   "/api/jobs/:jobid/decide",
   protectedRoutes,
   customValidation(decideApplicantSchema, "query"),
