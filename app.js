@@ -6,6 +6,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const nodemailer = require("nodemailer");
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json')
 
 // Requiring routes
 const authentication = require("./routes/authentication/indexAuthentication.route");
@@ -16,7 +18,7 @@ const jobRoutes = require("./routes/job.route");
 const mailSender = require("./middlewares/helperfunctions/mailSender");
 
 // setting cors
-const whiteList = ["http://localhost:3000", "http://localhost:3001", "https://testt-orpin.vercel.app"];
+const whiteList = ["http://localhost:3000", "http://localhost:3000","http://localhost:3001", "https://testt-orpin.vercel.app"];
 const corsOption = {
   origin: whiteList,
   credentials: true,
@@ -28,6 +30,7 @@ app.use(cors(corsOption));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use('/api/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 // Using routes
 app.use(authentication);

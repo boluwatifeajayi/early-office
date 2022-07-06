@@ -14,7 +14,8 @@
   "homepage": "https://github.com/boluwatifeajayi/early-office#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "nodemon app.js",
+    "swagger-autogen": "node swagger.js"
   },
   "keywords": [],
   "dependencies": {
@@ -35,7 +36,9 @@
     "mouse": "^0.0.1",
     "nodemailer": "^6.7.6",
     "passport": "^0.6.0",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "swagger-autogen": "^2.21.4",
+    "swagger-ui-express": "^4.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.18",

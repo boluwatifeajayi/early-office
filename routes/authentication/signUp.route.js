@@ -11,7 +11,7 @@ var route = express.Router();
 // Student signup route
 route.post(
   "/api/student/signUp",
-  validation(studentSignUpSchema),
+  // validation(studentSignUpSchema),
   studentSignUp
 );
 

@@ -20,7 +20,7 @@ const {
 
 async function studentSignUp(req, res) {
   // destructuring req.body
-  const { email, lastname, firstname, password, phoneNumber } = req.body;
+  const { email, lastname, firstname, password, phoneNumber} = req.body;
   const hashedPassword = await hashPassword(password);
   try {
     const newStudent = await studentModel.create({
