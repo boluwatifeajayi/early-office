@@ -18,4 +18,21 @@ async function getCompanyById(req, res) {
     res.status(404).json({ error: error.message });
   }
 }
-module.exports = { getCompanyById, getCompanies };
+async function getCompany(req, res) {
+  try {
+    const { companyId } = res.locals.decodedToken;
+    if (companyId == null)
+      return res
+        .status(400)
+        .json({
+          error: "Ensure you are a registered company to access this route",
+        });
+    const oneStudent = await companyModel
+      .findById(companyId)
+      .select("-orgPassword");
+    res.status(200).json(oneStudent);
+  } catch (error) {
+    res.status(404).json({ error: "No student available" });
+  }
+}
+module.exports = { getCompanyById, getCompanies, getCompany };

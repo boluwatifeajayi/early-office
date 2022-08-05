@@ -8,6 +8,19 @@ async function getStudents(req, res) {
   }
 }
 
+async function getStudent(req, res) {
+  try {
+    const { studentId } = res.locals.decodedToken;
+    if (studentId == null)
+      return res
+        .status(400)
+        .json({ error: "Ensure you are a student to access this route" });
+    const oneStudent = await students.findById(studentId).select("-password");
+    res.status(200).json(oneStudent);
+  } catch (error) {
+    res.status(404).json({ error: "No student available" });
+  }
+}
 async function getStudentById(req, res) {
   const id = req.params.id;
   try {
@@ -43,4 +56,5 @@ module.exports = {
   getStudentById,
   getStudentByLocation,
   getStudentByInterest,
+  getStudent,
 };
