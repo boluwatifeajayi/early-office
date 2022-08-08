@@ -87,9 +87,12 @@ const getAllJobs = async (req, res) => {
 };
 const getCompanyJobs = async (req, res) => {
   try {
-    const { companyName } = req.params;
-    const currentCompany = await companyModel.findOne({ orgName: companyName });
-    const { _id: companyId } = currentCompany;
+    const { companyId } = res.locals.decodedToken;
+    if (companyId == null)
+      return res.status(400).json({
+        error: "Ensure you are a registered company to access this route",
+      });
+    const currentCompany = await companyModel.findById(companyId);
     const jobsForCompany = await jobModel
       .find({ "org.orgId": companyId })
       .sort({ updatedAt: -1 });
@@ -124,7 +127,7 @@ const getStateJobs = async (req, res) => {
 const getTypeJobs = async (req, res) => {
   try {
     const { type } = req.params;
-    const currentJob = jobModel.find({ type }).sort({ updatedAt: -1 });
+    const currentJob = await jobModel.find({ type }).sort({ updatedAt: -1 });
     res.status(200).json(currentJob);
   } catch (error) {
     res.status(404).json({ error: error.message });
@@ -134,7 +137,7 @@ const getTypeJobs = async (req, res) => {
 const getSalaryJobs = async (req, res) => {
   try {
     const { minSalary, maxSalary } = req.query;
-    const currentJob = jobModel.find({
+    const currentJob = await jobModel.find({
       salary: { $gt: minSalary, $lt: maxSalary },
     });
     res.status(200).json(currentJob);
@@ -153,7 +156,7 @@ const applyToJob = async (req, res) => {
     const { reasonToBeHired, jobAvailability } = req.body;
     const { jobid } = req.params;
     const appliedAt = Date.now();
-    const getStudent = studentModel.findById(studentId);
+    const getStudent = await studentModel.findById(studentId);
     const newJobApplication = await jobModel.findByIdAndUpdate(
       jobid,
       {
