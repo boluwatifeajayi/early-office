@@ -40,7 +40,7 @@ route.post(
 route.get("/api/jobs", getAllJobs);
 
 // Get company's job
-route.get("/api/:companyName/jobs", getCompanyJobs);
+route.get("/api/company/jobs", protectedRoutes, getCompanyJobs);
 
 // To review an applicant from a job posted by a company
 route.get(
