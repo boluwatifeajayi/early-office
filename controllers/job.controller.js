@@ -193,7 +193,7 @@ const decideApplicant = async (req, res) => {
       { $set: { "student.status": status } },
       { new: true }
     );
-    if (status.toLowercase() == "accepted") {
+    if (status.toLowerCase() == "accepted") {
       await mailSender(
         {
           title: acceptedForJobTitle(),
@@ -201,7 +201,7 @@ const decideApplicant = async (req, res) => {
         },
         getStudent.email
       );
-    } else if (status.toLowercase() == "declined") {
+    } else if (status.toLowerCase() == "declined") {
       await mailSender(
         {
           title: declinedForJobTitle(),
