@@ -78,7 +78,7 @@ route.post(
 
 // TO DECIDE WHETHER TO ACCEPT OR DECLINE A STUDENT
 route.patch(
-  "/api/jobs/:jobid/decide",
+  "/api/jobs/:jobId/decide",
   protectedRoutes,
   customValidation(decideApplicantSchema, "query"),
   decideApplicant

@@ -5,13 +5,37 @@ const path = require("path")
 
 const port = process.env.PORT
 const doc = {
-    info: {
-      title: 'My API',
-      description: 'Description',
+  info: {
+    title: 'Early office',
+    description: 'Early office',
+  },
+  host: `localhost:${process.env.PORT}`,
+  securityDefinitions: {
+    api_key: {
+      type: "apiKey",
+      name: "api-key",
+      in: "body",
     },
-    host: `localhost:${process.env.PORT}`,
-    schemes: ['http'],
-  };
+  },
+  schemes: ["http"],
+  definitions: {
+    "server side error": {
+      $status: "ERROR",
+      $msg: "some error message",
+      error: {
+        $message: "Error message caught",
+        $name: "Error name",
+        stack: "Error stack",
+      },
+    },
+    "calculation": {
+      $createdAt: "2020-03-31T00:00:00.000Z",
+      $result: 100,
+    },
+  },
+};
+
+
 
 const outputFile = './swagger_output.json'
 const endpointsFiles = []

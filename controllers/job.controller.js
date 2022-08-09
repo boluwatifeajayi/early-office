@@ -190,12 +190,14 @@ const decideApplicant = async (req, res) => {
     const { studentId, status } = req.query;
     const { jobId } = req.params;
     const getStudent = await studentModel.findById(studentId);
-    // const queryData = ["pending", "accepted", "declined", "reviwed"];
+    const queryData = ["pending", "accepted", "declined", "reviwed"];
     const currentJob = await jobModel.findOneAndUpdate(
-      { _id: jobId, "student.studentId": studentId },
-      { $set: { "student.status": status } },
+      { _id: jobId, 'student.studentId' : studentId },
+      { $set: { "student.$.status": status } },
       { new: true }
     );
+
+    // const currentJob = await jobModel.findOne({ _id : jobId});
     if (status.toLowerCase() == "accepted") {
       await mailSender(
         {
@@ -215,6 +217,7 @@ const decideApplicant = async (req, res) => {
     }
     res.status(200).json(currentJob);
   } catch (error) {
+    console.log(error)
     res.status(400).json({ error: error.message });
   }
 };

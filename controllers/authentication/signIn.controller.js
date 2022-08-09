@@ -4,8 +4,13 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 async function studentSignIn(req, res) {
+  // destructuring req.body
   const { email, password } = req.body;
   try {
+    /*
+      #swagger.tags=['Authorizationt']
+      #swagger.description='Logout from early office'
+    */
     const currentStudent = await student.findOne({ email });
 
     if (currentStudent == null || typeof currentStudent == undefined)

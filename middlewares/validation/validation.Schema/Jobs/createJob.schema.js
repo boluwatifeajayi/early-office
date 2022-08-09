@@ -3,7 +3,7 @@ const joi = require("joi");
 const createJobSchema = joi.object().keys({
   role: joi.string(),
   jobName: joi.string(),
-  jobResponsibility: joi.string(),
+  jobResponsibility: joi.array(),
   jobType: joi.string(),
   numberOfOpenings: joi.string(),
   skillsNeeded: joi.array().items(joi.string()),

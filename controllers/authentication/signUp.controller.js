@@ -20,6 +20,9 @@ const {
 
 async function studentSignUp(req, res) {
   // destructuring req.body
+  /*
+    #swagger.summary= "Student sign up"
+  */
   const { email, lastname, firstname, password, phoneNumber} = req.body;
   const hashedPassword = await hashPassword(password);
   try {
