@@ -18,7 +18,7 @@ const jobRoutes = require("./routes/job.route");
 const mailSender = require("./middlewares/helperfunctions/mailSender");
 
 // setting cors
-const whiteList = ["http://localhost:3000", "http://localhost:3000","http://localhost:3001", "https://testt-orpin.vercel.app"];
+const whiteList = ["http://localhost:3000", "http://localhost:3000","http://localhost:3001", "https://testt-orpin.vercel.app", "https://earlyoffice.netlify.app"];
 const corsOption = {
   origin: whiteList,
   credentials: true,
